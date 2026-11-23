@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Pembayaran extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pembayaran';
+
+    protected $fillable = [
+        'pesanan_id',
+        'tanggal_bayar',
+        'nominal',
+        'jenis',
+        'catatan',
+    ];
+
+    protected $casts = [
+        'tanggal_bayar' => 'date',
+        'nominal' => 'decimal:2',
+    ];
+
+    /**
+     * Relasi ke pesanan terkait.
+     */
+    public function pesanan()
+    {
+        return $this->belongsTo(Pesanan::class, 'pesanan_id');
+    }
+}
