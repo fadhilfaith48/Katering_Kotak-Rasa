@@ -22,5 +22,9 @@
 /Figma Desain/
 /kotakrasa-html/
 Homestead.json
+
+# Artefak prototipe di root (tidak dipakai aplikasi Laravel)
+/index.html
+/favicon.png
 Homestead.yaml
 Thumbs.db
