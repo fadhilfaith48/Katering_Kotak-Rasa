@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,23 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('pesanan', PesananController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | F2 — Pembayaran, DP, dan pembatalan H-1
+    |--------------------------------------------------------------------------
+    */
+    Route::post('pesanan/{pesanan}/batal', [PesananController::class, 'batalkan'])
+        ->name('pesanan.batal');
+
+    Route::post('pesanan/{pesanan}/pembayaran', [PembayaranController::class, 'store'])
+        ->name('pembayaran.store');
+
+    Route::put('pembayaran/{pembayaran}', [PembayaranController::class, 'update'])
+        ->name('pembayaran.update');
+
+    Route::delete('pembayaran/{pembayaran}', [PembayaranController::class, 'destroy'])
+        ->name('pembayaran.destroy');
 
     /*
     |--------------------------------------------------------------------------

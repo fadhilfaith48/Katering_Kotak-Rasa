@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePesananRequest;
 use App\Models\Menu;
 use App\Models\Pelanggan;
 use App\Models\Pesanan;
+use App\Services\PesananService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,9 @@ use Illuminate\View\View;
 
 class PesananController extends Controller
 {
+    public function __construct(private readonly PesananService $pesananService)
+    {
+    }
     /**
      * Daftar pesanan dengan filter status dan pencarian pelanggan.
      */
@@ -95,7 +99,9 @@ class PesananController extends Controller
     {
         $pesanan->load(['pelanggan', 'items.menu', 'pembayaran']);
 
-        return view('pesanan.show', compact('pesanan'));
+        $dpAkanHangus = $this->pesananService->dpAkanHangus($pesanan);
+
+        return view('pesanan.show', compact('pesanan', 'dpAkanHangus'));
     }
 
     /**
@@ -127,6 +133,7 @@ class PesananController extends Controller
         }
 
         $data = $request->validated();
+        $statusLama = $pesanan->status;
 
         DB::transaction(function () use ($data, $request, $pesanan) {
             $pelanggan = $this->resolvePelanggan($data, $request);
@@ -145,9 +152,46 @@ class PesananController extends Controller
             $this->simpanItem($pesanan, $data['items']);
         });
 
+        if ($data['status'] === 'batal' && $statusLama !== 'batal') {
+            // Terapkan aturan DP hangus bila pembatalan dilakukan H-1.
+            $this->pesananService->batalkan($pesanan);
+        } else {
+            // Total bisa berubah, status bayar perlu dihitung ulang.
+            $this->pesananService->sinkronStatusBayar($pesanan);
+        }
+
         return redirect()
             ->route('pesanan.show', $pesanan)
             ->with('success', 'Pesanan '.$pesanan->nomor.' berhasil diperbarui.');
+    }
+
+    /**
+     * Batalkan pesanan (khusus Pemilik) dengan aturan DP hangus H-1.
+     */
+    public function batalkan(Request $request, Pesanan $pesanan): RedirectResponse
+    {
+        if (! $request->user()->isPemilik()) {
+            abort(403, 'Hanya Pemilik yang dapat membatalkan pesanan.');
+        }
+
+        if ($pesanan->status === 'batal') {
+            return redirect()
+                ->route('pesanan.show', $pesanan)
+                ->with('error', 'Pesanan ini sudah berstatus Batal.');
+        }
+
+        $hangus = $this->pesananService->dpAkanHangus($pesanan);
+        $this->pesananService->batalkan($pesanan);
+
+        $pesan = 'Pesanan '.$pesanan->nomor.' dibatalkan.';
+
+        if ($hangus > 0) {
+            $pesan .= ' DP Rp '.number_format($hangus, 0, ',', '.').' ditandai hangus dan tetap masuk pemasukan.';
+        }
+
+        return redirect()
+            ->route('pesanan.show', $pesanan)
+            ->with('success', $pesan);
     }
 
     /**
