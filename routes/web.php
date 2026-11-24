@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,15 +30,17 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
+    | F1 — Pencatatan pesanan
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('pesanan', PesananController::class);
+
+    /*
+    |--------------------------------------------------------------------------
     | Placeholder modul tahap berikutnya
     |--------------------------------------------------------------------------
-    | Dibuat agar navigasi bawah tidak error sebelum fitur F1-F5 dibangun.
+    | Dibuat agar navigasi bawah tidak error sebelum fitur F2-F5 dibangun.
     */
-    Route::view('/pesanan', 'placeholder', [
-        'judul' => 'Pesanan',
-        'deskripsi' => 'Pencatatan pesanan dan item menu akan tersedia pada tahap berikutnya.',
-    ])->name('pesanan.index');
-
     Route::view('/jadwal', 'placeholder', [
         'judul' => 'Jadwal',
         'deskripsi' => 'Jadwal pesanan per tanggal acara akan tersedia pada tahap berikutnya.',
