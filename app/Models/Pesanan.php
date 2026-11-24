@@ -9,6 +9,11 @@ class Pesanan extends Model
 {
     use HasFactory;
 
+    /**
+     * Daftar status pesanan yang valid.
+     */
+    public const STATUS = ['baru', 'diproses', 'selesai', 'batal'];
+
     protected $table = 'pesanan';
 
     protected $fillable = [
@@ -80,5 +85,59 @@ class Pesanan extends Model
 
         $sisa = (float) $this->total - $this->total_dibayar;
         return max(0.0, $sisa);
+    }
+
+    /**
+     * Nomor pesanan untuk ditampilkan, diturunkan dari primary key.
+     * Contoh: id 123 -> "PSN-000123".
+     */
+    public function getNomorAttribute(): string
+    {
+        return 'PSN-'.str_pad((string) $this->getKey(), 6, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * Total box/snack yang dipesan (dari seluruh item).
+     */
+    public function getJumlahBoxAttribute(): int
+    {
+        $items = $this->relationLoaded('items') ? $this->items : $this->items()->get();
+
+        return (int) $items->sum('jumlah');
+    }
+
+    /**
+     * Label status pesanan dalam bahasa Indonesia.
+     */
+    public function getLabelStatusAttribute(): string
+    {
+        return match ($this->status) {
+            'baru' => 'Baru',
+            'diproses' => 'Diproses',
+            'selesai' => 'Selesai',
+            'batal' => 'Batal',
+            default => ucfirst((string) $this->status),
+        };
+    }
+
+    /**
+     * Label status pembayaran dalam bahasa Indonesia.
+     */
+    public function getLabelStatusBayarAttribute(): string
+    {
+        return match ($this->status_bayar) {
+            'belum_bayar' => 'Belum bayar',
+            'dp' => 'DP',
+            'lunas' => 'Lunas',
+            default => ucfirst((string) $this->status_bayar),
+        };
+    }
+
+    /**
+     * Apakah pesanan sudah memiliki catatan pembayaran.
+     */
+    public function sudahAdaPembayaran(): bool
+    {
+        return $this->pembayaran()->exists();
     }
 }
