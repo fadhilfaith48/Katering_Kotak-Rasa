@@ -220,15 +220,9 @@
                         @foreach (['baru' => 'Baru', 'diproses' => 'Diproses', 'selesai' => 'Selesai'] as $nilai => $label)
                             <option value="{{ $nilai }}" @selected(old('status', $pesanan->status) === $nilai)>{{ $label }}</option>
                         @endforeach
-
-                        @if (auth()->user()->isPemilik())
-                            <option value="batal" @selected(old('status', $pesanan->status) === 'batal')>
-                                Batal (DP hangus jika H-1)
-                            </option>
-                        @endif
                     </select>
                     <p class="mt-1 text-[11px] text-slate-400">
-                        Membatalkan pesanan dapat membuat DP hangus. Hanya Pemilik yang boleh membatalkan.
+                        Pembatalan pesanan dilakukan dari halaman detail oleh Pemilik agar DP hangus tercatat otomatis.
                     </p>
                 @endif
             </div>
