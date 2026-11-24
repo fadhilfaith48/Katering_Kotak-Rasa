@@ -15,14 +15,14 @@
     @php
         $pengguna = auth()->user();
         $menuBawah = [
-            ['route' => 'dashboard', 'label' => 'Beranda', 'icon' => 'home'],
-            ['route' => 'pesanan.index', 'label' => 'Pesanan', 'icon' => 'bag'],
-            ['route' => 'jadwal.index', 'label' => 'Jadwal', 'icon' => 'calendar'],
-            ['route' => 'pengeluaran.index', 'label' => 'Pengeluaran', 'icon' => 'wallet'],
+            ['route' => 'dashboard', 'cocok' => 'dashboard*', 'label' => 'Beranda', 'icon' => 'home'],
+            ['route' => 'pesanan.index', 'cocok' => 'pesanan.*', 'label' => 'Pesanan', 'icon' => 'bag'],
+            ['route' => 'jadwal.index', 'cocok' => 'jadwal.*', 'label' => 'Jadwal', 'icon' => 'calendar'],
+            ['route' => 'pengeluaran.index', 'cocok' => 'pengeluaran.*', 'label' => 'Pengeluaran', 'icon' => 'wallet'],
         ];
 
         if ($pengguna?->isPemilik()) {
-            $menuBawah[] = ['route' => 'laporan.index', 'label' => 'Laporan', 'icon' => 'chart'];
+            $menuBawah[] = ['route' => 'laporan.index', 'cocok' => 'laporan.*', 'label' => 'Laporan', 'icon' => 'chart'];
         }
     @endphp
 
@@ -93,7 +93,7 @@
         <div class="mx-auto flex max-w-md items-stretch px-1">
             @foreach ($menuBawah as $menu)
                 @php
-                    $aktif = request()->routeIs($menu['route'].'*');
+                    $aktif = request()->routeIs($menu['cocok']);
                 @endphp
                 <a href="{{ route($menu['route']) }}"
                    class="flex flex-1 flex-col items-center gap-1 px-1 py-2.5 text-[10px] font-semibold transition {{ $aktif ? 'text-orange-600' : 'text-slate-400 hover:text-slate-600' }}"

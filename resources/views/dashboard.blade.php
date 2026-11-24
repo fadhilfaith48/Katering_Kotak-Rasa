@@ -79,7 +79,7 @@
 
     {{-- Aksi cepat --}}
     <section class="mt-5 grid grid-cols-2 gap-3">
-        <a href="{{ route('pesanan.index') }}"
+        <a href="{{ route('pesanan.create') }}"
            class="group flex flex-col justify-between rounded-2xl bg-orange-600 p-4 text-white shadow-md shadow-orange-600/25 transition hover:bg-orange-700 active:scale-[0.99]">
             <span class="grid h-9 w-9 place-items-center rounded-xl bg-white/15">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
@@ -131,7 +131,7 @@
                     };
                 @endphp
 
-                <a href="{{ route('pesanan.index') }}"
+                <a href="{{ route('pesanan.show', $pesanan) }}"
                    class="flex items-center gap-3 border-b border-slate-100 px-4 py-3 transition last:border-b-0 hover:bg-slate-50/80">
                     <span class="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-orange-50 text-orange-600">
                         <span class="text-sm font-bold leading-none">{{ $pesanan->tanggal_acara->format('d') }}</span>
