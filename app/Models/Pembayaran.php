@@ -31,4 +31,17 @@ class Pembayaran extends Model
     {
         return $this->belongsTo(Pesanan::class, 'pesanan_id');
     }
+
+    /**
+     * Label jenis pembayaran dalam bahasa Indonesia.
+     */
+    public function getLabelJenisAttribute(): string
+    {
+        return match ($this->jenis) {
+            'dp' => 'DP',
+            'pelunasan' => 'Pelunasan',
+            'dp_hangus' => 'DP hangus',
+            default => ucfirst((string) $this->jenis),
+        };
+    }
 }
