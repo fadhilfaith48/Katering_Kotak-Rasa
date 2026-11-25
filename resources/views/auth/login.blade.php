@@ -12,7 +12,7 @@
 </head>
 <body class="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased">
     <div class="flex min-h-screen flex-col items-center justify-center px-4 py-10">
-        <div class="w-full max-w-sm">
+        <div class="w-full max-w-sm lg:max-w-md">
             {{-- Brand --}}
             <div class="flex flex-col items-center text-center">
                 <span class="grid h-14 w-14 place-items-center rounded-2xl bg-orange-600 text-white shadow-lg shadow-orange-600/25">

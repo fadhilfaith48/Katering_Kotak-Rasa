@@ -28,7 +28,7 @@
             </span>
         </div>
 
-        <h1 class="mt-2.5 text-2xl font-bold tracking-tight text-slate-900">{{ $sapaan }}, {{ $pengguna->name }}!</h1>
+        <h1 class="mt-2.5 text-2xl font-bold tracking-tight text-slate-900 lg:text-3xl">{{ $sapaan }}, {{ $pengguna->name }}!</h1>
         <p class="mt-1 text-sm leading-relaxed text-slate-500">
             Berikut rangkuman pesanan dan operasional <b class="text-slate-700">KotakRasa</b> hari ini,
             <b class="text-slate-700">{{ $hariIni }}</b>.
@@ -36,7 +36,7 @@
     </section>
 
     {{-- Kartu metrik --}}
-    <section class="grid grid-cols-2 gap-3">
+    <section class="grid grid-cols-2 gap-3 lg:grid-cols-4">
         @if ($pengguna->isPemilik())
             <div class="col-span-2 rounded-2xl border border-orange-200 bg-orange-600 p-4 text-white shadow-md shadow-orange-600/25">
                 <div class="flex items-center justify-between">
@@ -80,9 +80,9 @@
     </section>
 
     {{-- Aksi cepat --}}
-    <section class="mt-5 grid grid-cols-2 gap-3">
+    <section class="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <a href="{{ route('pesanan.create') }}"
-           class="group flex flex-col justify-between rounded-2xl bg-orange-600 p-4 text-white shadow-md shadow-orange-600/25 transition hover:bg-orange-700 active:scale-[0.99]">
+           class="group flex flex-col justify-between rounded-2xl bg-orange-600 p-4 text-white shadow-md shadow-orange-600/25 transition hover:bg-orange-700 active:scale-[0.99] lg:col-span-2">
             <span class="grid h-9 w-9 place-items-center rounded-xl bg-white/15">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -95,7 +95,7 @@
         </a>
 
         <a href="{{ route('pengeluaran.index') }}"
-           class="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 text-slate-800 shadow-sm transition hover:border-orange-200 hover:bg-orange-50/40 active:scale-[0.99]">
+           class="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 text-slate-800 shadow-sm transition hover:border-orange-200 hover:bg-orange-50/40 active:scale-[0.99] lg:col-span-2">
             <span class="grid h-9 w-9 place-items-center rounded-xl bg-orange-50 text-orange-600">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 1 3 7.5m18 4.5v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9v3m18 0h-5.25a.75.75 0 0 0-.75.75v.5c0 .414.336.75.75.75H21" />
