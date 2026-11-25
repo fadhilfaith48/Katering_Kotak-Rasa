@@ -60,7 +60,9 @@
                 </span>
             </div>
             <p class="mt-2 text-xl font-bold text-slate-900">{{ number_format($totalBoxAktif, 0, ',', '.') }} <span class="text-sm font-semibold text-slate-400">box</span></p>
-            <p class="mt-0.5 text-[11px] text-slate-400">Perlu disiapkan</p>
+            <p class="mt-0.5 text-[11px] text-slate-400">
+                Perlu disiapkan &middot; {{ number_format($totalSnackAktif, 0, ',', '.') }} snack
+            </p>
         </div>
 
         <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
@@ -121,7 +123,6 @@
 
             @forelse ($pesananTerdekat as $pesanan)
                 @php
-                    $jumlahBox = (int) $pesanan->items->sum('jumlah');
                     $labelHari = $pesanan->tanggal_acara->isToday() ? 'Hari ini' : 'Besok';
                     $warnaStatus = match ($pesanan->status) {
                         'baru' => 'bg-sky-50 text-sky-700 ring-sky-100',
@@ -143,7 +144,10 @@
                             {{ $pesanan->pelanggan?->nama ?? 'Pelanggan' }}
                         </span>
                         <span class="mt-0.5 block text-[11px] text-slate-400">
-                            {{ $labelHari }} &middot; {{ $jumlahBox }} item
+                            {{ $labelHari }} &middot; {{ $pesanan->jumlah_box }} box
+                            @if ($pesanan->jumlah_snack > 0)
+                                &middot; {{ $pesanan->jumlah_snack }} snack
+                            @endif
                         </span>
                     </span>
 

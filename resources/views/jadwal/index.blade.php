@@ -10,13 +10,6 @@
                 : \Illuminate\Support\Carbon::parse($kunci)->locale('id')->isoFormat('dddd, D MMMM YYYY');
         };
 
-        $jumlahBox = fn ($pesanan) => (int) $pesanan->items
-            ->filter(fn ($item) => $item->menu?->jenis === 'box')
-            ->sum('jumlah');
-
-        $jumlahSnack = fn ($pesanan) => (int) $pesanan->items
-            ->filter(fn ($item) => $item->menu?->jenis === 'snack')
-            ->sum('jumlah');
     @endphp
 
     <x-page-header judul="Jadwal"
@@ -95,8 +88,8 @@
             @foreach ($daftar as $item)
                 @php
                     $batal = $item->status === 'batal';
-                    $box = $jumlahBox($item);
-                    $snack = $jumlahSnack($item);
+                    $box = $item->jumlah_box;
+                    $snack = $item->jumlah_snack;
                 @endphp
 
                 <a href="{{ route('pesanan.show', $item) }}"
