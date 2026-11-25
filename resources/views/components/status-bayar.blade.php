@@ -2,10 +2,10 @@
 
 @php
     $kelas = match ($status) {
-        'belum_bayar' => 'bg-rose-50 text-rose-700 ring-rose-200',
-        'dp' => 'bg-amber-50 text-amber-700 ring-amber-200',
-        'lunas' => 'bg-emerald-50 text-emerald-700 ring-emerald-200',
-        default => 'bg-slate-50 text-slate-600 ring-slate-200',
+        'belum_bayar' => 'bg-rose-50 text-kr-danger ring-rose-200',
+        'dp' => 'bg-amber-50 text-kr-warning ring-amber-200',
+        'lunas' => 'bg-emerald-50 text-kr-success-deep ring-emerald-200',
+        default => 'bg-kr-tint text-kr-muted ring-kr-line',
     };
 
     $label = match ($status) {

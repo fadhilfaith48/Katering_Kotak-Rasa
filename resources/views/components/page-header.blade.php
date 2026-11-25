@@ -5,9 +5,9 @@
 
 <div class="mb-5 flex items-start justify-between gap-3">
     <div class="min-w-0">
-        <h1 class="text-xl font-bold tracking-tight text-slate-900">{{ $judul }}</h1>
+        <h1 class="text-xl font-bold tracking-tight text-kr-ink sm:text-2xl">{{ $judul }}</h1>
         @if ($deskripsi)
-            <p class="mt-1 text-sm leading-relaxed text-slate-500">{{ $deskripsi }}</p>
+            <p class="mt-1 text-sm leading-relaxed text-kr-muted">{{ $deskripsi }}</p>
         @endif
     </div>
 
