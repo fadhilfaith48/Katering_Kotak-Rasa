@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananController;
@@ -56,14 +57,18 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
+    | F4 — Jadwal pesanan
+    |--------------------------------------------------------------------------
+    | Pemilik dan Pencatat sama-sama boleh melihat.
+    */
+    Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+
+    /*
+    |--------------------------------------------------------------------------
     | Placeholder modul tahap berikutnya
     |--------------------------------------------------------------------------
-    | Dibuat agar navigasi bawah tidak error sebelum fitur F2-F5 dibangun.
+    | Dibuat agar navigasi bawah tidak error sebelum fitur F5 dibangun.
     */
-    Route::view('/jadwal', 'placeholder', [
-        'judul' => 'Jadwal',
-        'deskripsi' => 'Jadwal pesanan per tanggal acara akan tersedia pada tahap berikutnya.',
-    ])->name('jadwal.index');
 
     /*
     |--------------------------------------------------------------------------
