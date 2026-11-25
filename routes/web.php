@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananController;
@@ -65,13 +66,6 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Placeholder modul tahap berikutnya
-    |--------------------------------------------------------------------------
-    | Dibuat agar navigasi bawah tidak error sebelum fitur F5 dibangun.
-    */
-
-    /*
-    |--------------------------------------------------------------------------
     | F3 — Pencatatan pengeluaran
     |--------------------------------------------------------------------------
     | Lihat & tambah: Pemilik dan Pencatat.
@@ -80,11 +74,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('pengeluaran', PengeluaranController::class)
         ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
-    // Laporan keuangan hanya untuk Pemilik.
+    /*
+    |--------------------------------------------------------------------------
+    | F5 — Laporan keuangan bulanan
+    |--------------------------------------------------------------------------
+    | Hanya Pemilik, dijaga middleware role pada group route.
+    */
     Route::middleware('role:pemilik')->group(function () {
-        Route::view('/laporan', 'placeholder', [
-            'judul' => 'Laporan',
-            'deskripsi' => 'Laporan keuangan bulanan akan tersedia pada tahap berikutnya.',
-        ])->name('laporan.index');
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     });
 });
