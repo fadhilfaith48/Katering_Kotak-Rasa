@@ -6,6 +6,25 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Token visual KotakRasa — diambil dari prototipe Figma */
+    --color-kr-cream: #fbf7f2;
+    --color-kr-tint: #fff8f3;
+    --color-kr-soft: #fcf2eb;
+    --color-kr-line: #eee5dd;
+    --color-kr-line-strong: #e8ded6;
+    --color-kr-ink: #1f1b17;
+    --color-kr-brown: #584237;
+    --color-kr-muted: #806b5f;
+    --color-kr-faint: #705c50;
+    --color-kr-primary: #f97316;
+    --color-kr-accent: #9d4300;
+    --color-kr-success: #059669;
+    --color-kr-success-deep: #047857;
+    --color-kr-danger: #be123c;
+    --color-kr-warning: #b45309;
+
+    --shadow-kr-card: 0 1px 3px rgb(31 27 23 / 0.06);
 }
