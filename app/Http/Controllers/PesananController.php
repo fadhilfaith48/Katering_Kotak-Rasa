@@ -27,7 +27,7 @@ class PesananController extends Controller
         $cari = trim($request->string('q')->toString());
 
         $pesanan = Pesanan::query()
-            ->with(['pelanggan', 'items'])
+            ->with(['pelanggan', 'items.menu'])
             ->when(in_array($status, Pesanan::STATUS, true), fn ($query) => $query->where('status', $status))
             ->when($cari !== '', function ($query) use ($cari) {
                 $kataKunci = '%'.mb_strtolower($cari).'%';

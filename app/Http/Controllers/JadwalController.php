@@ -36,8 +36,8 @@ class JadwalController extends Controller
         $aktif = $semua->where('status', '!=', 'batal');
         $jumlahPesanan = $aktif->count();
         $jumlahBatal = $semua->count() - $jumlahPesanan;
-        $totalBox = $aktif->sum(fn (Pesanan $pesanan) => $this->jumlahJenis($pesanan, 'box'));
-        $totalSnack = $aktif->sum(fn (Pesanan $pesanan) => $this->jumlahJenis($pesanan, 'snack'));
+        $totalBox = $aktif->sum(fn (Pesanan $pesanan) => $pesanan->jumlah_box);
+        $totalSnack = $aktif->sum(fn (Pesanan $pesanan) => $pesanan->jumlah_snack);
 
         return view('jadwal.index', compact(
             'rentang',
@@ -105,15 +105,5 @@ class JadwalController extends Controller
         $tanggal = DateTimeImmutable::createFromFormat('!Y-m-d', $nilai);
 
         return $tanggal && $tanggal->format('Y-m-d') === $nilai ? $nilai : null;
-    }
-
-    /**
-     * Jumlah item untuk satu jenis menu (box atau snack).
-     */
-    private function jumlahJenis(Pesanan $pesanan, string $jenis): int
-    {
-        return (int) $pesanan->items
-            ->filter(fn ($item) => $item->menu?->jenis === $jenis)
-            ->sum('jumlah');
     }
 }

@@ -25,9 +25,17 @@ class DashboardController extends Controller
             ->whereBetween('tanggal_acara', [$awalBulan, $akhirBulan])
             ->count();
 
-        // Total box/snack yang masih perlu disiapkan.
+        // Box dan snack dihitung terpisah sesuai jenis menu.
+        $aktif = fn ($query) => $query->whereIn('status', ['baru', 'diproses']);
+
         $totalBoxAktif = (int) PesananItem::query()
-            ->whereHas('pesanan', fn ($query) => $query->whereIn('status', ['baru', 'diproses']))
+            ->whereHas('menu', fn ($query) => $query->where('jenis', 'box'))
+            ->whereHas('pesanan', $aktif)
+            ->sum('jumlah');
+
+        $totalSnackAktif = (int) PesananItem::query()
+            ->whereHas('menu', fn ($query) => $query->where('jenis', 'snack'))
+            ->whereHas('pesanan', $aktif)
             ->sum('jumlah');
 
         // Omzet hanya untuk Pemilik (Pencatat tidak boleh melihat nominal uang).
@@ -41,7 +49,7 @@ class DashboardController extends Controller
 
         // Pesanan yang perlu disiapkan hari ini dan besok.
         $pesananTerdekat = Pesanan::query()
-            ->with(['pelanggan', 'items'])
+            ->with(['pelanggan', 'items.menu'])
             ->where('status', '!=', 'batal')
             ->whereBetween('tanggal_acara', [
                 today()->toDateString(),
@@ -54,6 +62,7 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'totalPesananAktif',
             'totalBoxAktif',
+            'totalSnackAktif',
             'omzetBulanIni',
             'pesananTerdekat',
         ));
