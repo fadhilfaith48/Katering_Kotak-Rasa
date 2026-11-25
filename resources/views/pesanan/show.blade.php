@@ -18,7 +18,7 @@
         <x-slot:aksi>
             <div class="flex items-center gap-2">
                 <a href="{{ route('pesanan.edit', $pesanan) }}"
-                   class="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+                   class="inline-flex items-center gap-1.5 rounded-xl border border-kr-line-strong bg-white px-3.5 py-2.5 text-sm font-semibold text-kr-muted transition hover:bg-kr-soft">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
                     </svg>
@@ -32,7 +32,7 @@
                         @csrf
 
                         <button type="submit"
-                                class="inline-flex items-center gap-1.5 rounded-xl border border-rose-300 bg-white px-3 py-2.5 text-sm font-semibold text-rose-600 transition hover:bg-rose-50">
+                                class="inline-flex items-center gap-1.5 rounded-xl border border-rose-300 bg-white px-3 py-2.5 text-sm font-semibold text-kr-danger transition hover:bg-rose-50">
                             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
@@ -46,12 +46,12 @@
 
     <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-5">
     {{-- Ringkasan --}}
-    <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <section class="rounded-2xl border border-kr-line bg-white p-4 shadow-kr-card">
         <div class="flex items-start justify-between gap-2">
             <div class="min-w-0">
-                <p class="truncate text-base font-bold text-slate-900">{{ $pesanan->pelanggan?->nama ?? 'Pelanggan' }}</p>
+                <p class="truncate text-base font-bold text-kr-ink">{{ $pesanan->pelanggan?->nama ?? 'Pelanggan' }}</p>
                 @if ($pesanan->pelanggan?->no_telepon_wa)
-                    <p class="mt-0.5 text-xs text-slate-500">{{ $pesanan->pelanggan->no_telepon_wa }}</p>
+                    <p class="mt-0.5 text-xs text-kr-muted">{{ $pesanan->pelanggan->no_telepon_wa }}</p>
                 @endif
             </div>
 
@@ -61,41 +61,41 @@
             </div>
         </div>
 
-        <dl class="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-3 text-xs lg:grid-cols-4">
+        <dl class="mt-4 grid grid-cols-2 gap-3 border-t border-kr-line/70 pt-3 text-xs lg:grid-cols-4">
             <div>
-                <dt class="font-semibold uppercase tracking-wide text-slate-400">Tanggal pesan</dt>
-                <dd class="mt-0.5 font-semibold text-slate-700">
+                <dt class="font-semibold uppercase tracking-wide text-kr-faint">Tanggal pesan</dt>
+                <dd class="mt-0.5 font-semibold text-kr-brown">
                     {{ $pesanan->tanggal_pesan?->locale('id')->isoFormat('D MMM YYYY') }}
                 </dd>
             </div>
 
             <div>
-                <dt class="font-semibold uppercase tracking-wide text-slate-400">Tanggal acara</dt>
-                <dd class="mt-0.5 font-semibold text-slate-700">
+                <dt class="font-semibold uppercase tracking-wide text-kr-faint">Tanggal acara</dt>
+                <dd class="mt-0.5 font-semibold text-kr-brown">
                     {{ $pesanan->tanggal_acara?->locale('id')->isoFormat('dddd, D MMM YYYY') }}
                 </dd>
             </div>
 
             <div>
-                <dt class="font-semibold uppercase tracking-wide text-slate-400">Jalur pesanan</dt>
-                <dd class="mt-0.5 font-semibold text-slate-700">
+                <dt class="font-semibold uppercase tracking-wide text-kr-faint">Jalur pesanan</dt>
+                <dd class="mt-0.5 font-semibold text-kr-brown">
                     {{ $pesanan->jalur_pesanan === 'whatsapp' ? 'WhatsApp' : 'Langsung' }}
                 </dd>
             </div>
 
             <div>
-                <dt class="font-semibold uppercase tracking-wide text-slate-400">Jumlah box</dt>
-                <dd class="mt-0.5 font-semibold text-slate-700">{{ $pesanan->jumlah_box }} box</dd>
+                <dt class="font-semibold uppercase tracking-wide text-kr-faint">Jumlah box</dt>
+                <dd class="mt-0.5 font-semibold text-kr-brown">{{ $pesanan->jumlah_box }} box</dd>
             </div>
 
             <div>
-                <dt class="font-semibold uppercase tracking-wide text-slate-400">Jumlah snack</dt>
-                <dd class="mt-0.5 font-semibold text-slate-700">{{ $pesanan->jumlah_snack }} snack</dd>
+                <dt class="font-semibold uppercase tracking-wide text-kr-faint">Jumlah snack</dt>
+                <dd class="mt-0.5 font-semibold text-kr-brown">{{ $pesanan->jumlah_snack }} snack</dd>
             </div>
         </dl>
 
         @if ($pesanan->catatan_khusus)
-            <div class="mt-3 rounded-xl bg-amber-50 px-3 py-2.5 text-xs text-amber-800">
+            <div class="mt-3 rounded-xl bg-amber-50 px-3 py-2.5 text-xs text-kr-warning">
                 <span class="font-bold uppercase tracking-wide">Catatan:</span>
                 {{ $pesanan->catatan_khusus }}
             </div>
@@ -103,46 +103,46 @@
     </section>
 
     {{-- Item --}}
-    <section class="mt-4 rounded-2xl border border-slate-200 bg-white shadow-sm lg:mt-0">
-        <div class="border-b border-slate-100 px-4 py-3">
-            <h2 class="text-sm font-bold text-slate-900">Rincian Item</h2>
+    <section class="mt-4 rounded-2xl border border-kr-line bg-white shadow-kr-card lg:mt-0">
+        <div class="border-b border-kr-line/70 px-4 py-3">
+            <h2 class="text-sm font-bold text-kr-ink">Rincian Item</h2>
         </div>
 
         @forelse ($pesanan->items as $item)
-            <div class="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3 last:border-b-0">
+            <div class="flex items-start justify-between gap-3 border-b border-kr-line/70 px-4 py-3 last:border-b-0">
                 <div class="min-w-0">
-                    <p class="truncate text-sm font-semibold text-slate-800">{{ $item->menu?->nama_menu ?? 'Menu' }}</p>
-                    <p class="mt-0.5 text-[11px] text-slate-400">
+                    <p class="truncate text-sm font-semibold text-kr-ink">{{ $item->menu?->nama_menu ?? 'Menu' }}</p>
+                    <p class="mt-0.5 text-[11px] text-kr-faint">
                         {{ $item->jumlah }} &times; {{ $rupiah($item->harga_satuan) }}
                     </p>
                 </div>
 
-                <span class="shrink-0 text-sm font-semibold text-slate-800">{{ $rupiah($item->subtotal) }}</span>
+                <span class="shrink-0 text-sm font-semibold text-kr-ink">{{ $rupiah($item->subtotal) }}</span>
             </div>
         @empty
-            <p class="px-4 py-6 text-center text-sm text-slate-400">Belum ada item pada pesanan ini.</p>
+            <p class="px-4 py-6 text-center text-sm text-kr-faint">Belum ada item pada pesanan ini.</p>
         @endforelse
 
-        <div class="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-4 py-3">
-            <span class="text-xs font-bold uppercase tracking-wide text-slate-500">Total pesanan</span>
-            <span class="text-lg font-bold text-slate-900">{{ $rupiah($pesanan->total) }}</span>
+        <div class="flex items-center justify-between border-t border-kr-line bg-kr-tint px-4 py-3">
+            <span class="text-xs font-bold uppercase tracking-wide text-kr-muted">Total pesanan</span>
+            <span class="text-lg font-bold text-kr-ink">{{ $rupiah($pesanan->total) }}</span>
         </div>
     </section>
     </div>
 
     {{-- Pembayaran --}}
-    <section class="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <section class="mt-4 rounded-2xl border border-kr-line bg-white p-4 shadow-kr-card">
         <div class="flex items-start justify-between gap-2">
             <div>
-                <h2 class="text-sm font-bold text-slate-900">Pembayaran</h2>
-                <p class="mt-0.5 text-[11px] text-slate-400">DP dan pelunasan tercatat di sini.</p>
+                <h2 class="text-sm font-bold text-kr-ink">Pembayaran</h2>
+                <p class="mt-0.5 text-[11px] text-kr-faint">DP dan pelunasan tercatat di sini.</p>
             </div>
 
             <x-status-bayar :status="$pesanan->status_bayar" class="shrink-0" />
         </div>
 
         @if ($errors->any())
-            <div class="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2.5 text-xs text-rose-800">
+            <div class="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2.5 text-xs text-kr-danger">
                 <p class="font-bold">Periksa kembali isian pembayaran:</p>
                 <ul class="mt-1 list-inside list-disc space-y-0.5">
                     @foreach ($errors->all() as $pesan)
@@ -152,29 +152,29 @@
             </div>
         @endif
 
-        <dl class="mt-3 space-y-2 border-y border-slate-100 py-3 text-sm">
+        <dl class="mt-3 space-y-2 border-y border-kr-line/70 py-3 text-sm">
             <div class="flex items-center justify-between">
-                <dt class="text-slate-500">Sudah dibayar</dt>
-                <dd class="font-semibold text-slate-800">{{ $rupiah($pesanan->total_dibayar) }}</dd>
+                <dt class="text-kr-muted">Sudah dibayar</dt>
+                <dd class="font-semibold text-kr-ink">{{ $rupiah($pesanan->total_dibayar) }}</dd>
             </div>
 
             @if ((float) $pesanan->dp_hangus > 0)
                 <div class="flex items-center justify-between">
-                    <dt class="text-rose-500">DP hangus</dt>
-                    <dd class="font-semibold text-rose-600">{{ $rupiah($pesanan->dp_hangus) }}</dd>
+                    <dt class="text-kr-danger">DP hangus</dt>
+                    <dd class="font-semibold text-kr-danger">{{ $rupiah($pesanan->dp_hangus) }}</dd>
                 </div>
             @endif
 
             <div class="flex items-center justify-between">
-                <dt class="font-semibold text-slate-600">Sisa tagihan</dt>
-                <dd class="text-base font-bold {{ $pesanan->sisa_tagihan > 0 ? 'text-orange-600' : 'text-emerald-600' }}">
+                <dt class="font-semibold text-kr-muted">Sisa tagihan</dt>
+                <dd class="text-base font-bold {{ $pesanan->sisa_tagihan > 0 ? 'text-kr-primary' : 'text-kr-success' }}">
                     {{ $rupiah($pesanan->sisa_tagihan) }}
                 </dd>
             </div>
         </dl>
 
         @if (! $bisaBayar)
-            <p class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-[11px] text-rose-700">
+            <p class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-[11px] text-kr-danger">
                 Pesanan sudah dibatalkan. Sisa tagihan ditutup dan pembayaran tidak bisa ditambahkan.
                 @if ((float) $pesanan->dp_hangus > 0)
                     DP hangus tetap dihitung sebagai pemasukan pada laporan.
@@ -185,7 +185,7 @@
         {{-- Riwayat pembayaran --}}
         @if ($pesanan->pembayaran->isNotEmpty())
             <div class="mt-4">
-                <h3 class="text-[11px] font-bold uppercase tracking-wide text-slate-400">Riwayat Pembayaran</h3>
+                <h3 class="text-[11px] font-bold uppercase tracking-wide text-kr-faint">Riwayat Pembayaran</h3>
 
                 <div class="mt-2 space-y-2">
                     @foreach ($pesanan->pembayaran->sortByDesc('tanggal_bayar') as $bayar)
@@ -193,28 +193,28 @@
                             $hangus = $bayar->jenis === 'dp_hangus';
                         @endphp
 
-                        <div class="rounded-xl border p-3 {{ $hangus ? 'border-rose-200 bg-rose-50/70' : 'border-slate-200 bg-slate-50/60' }}">
+                        <div class="rounded-xl border p-3 {{ $hangus ? 'border-rose-200 bg-rose-50/70' : 'border-kr-line bg-kr-tint/60' }}">
                             <div class="flex items-start justify-between gap-2">
                                 <div class="min-w-0">
                                     <div class="flex flex-wrap items-center gap-2">
-                                        <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 {{ $hangus ? 'bg-rose-100 text-rose-700 ring-rose-200' : ($bayar->jenis === 'dp' ? 'bg-amber-50 text-amber-700 ring-amber-200' : 'bg-emerald-50 text-emerald-700 ring-emerald-200') }}">
+                                        <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 {{ $hangus ? 'bg-rose-100 text-kr-danger ring-rose-200' : ($bayar->jenis === 'dp' ? 'bg-amber-50 text-kr-warning ring-amber-200' : 'bg-emerald-50 text-kr-success-deep ring-emerald-200') }}">
                                             {{ $bayar->label_jenis }}
                                         </span>
-                                        <span class="text-[11px] text-slate-500">
+                                        <span class="text-[11px] text-kr-muted">
                                             {{ $bayar->tanggal_bayar?->locale('id')->isoFormat('D MMM YYYY') }}
                                         </span>
                                     </div>
 
-                                    <p class="mt-1.5 text-base font-bold {{ $hangus ? 'text-rose-700' : 'text-slate-900' }}">
+                                    <p class="mt-1.5 text-base font-bold {{ $hangus ? 'text-kr-danger' : 'text-kr-ink' }}">
                                         {{ $rupiah($bayar->nominal) }}
                                     </p>
 
                                     @if ($bayar->catatan)
-                                        <p class="mt-0.5 break-words text-[11px] text-slate-500">{{ $bayar->catatan }}</p>
+                                        <p class="mt-0.5 break-words text-[11px] text-kr-muted">{{ $bayar->catatan }}</p>
                                     @endif
 
                                     @if ($hangus)
-                                        <p class="mt-1 text-[11px] font-semibold text-rose-600">
+                                        <p class="mt-1 text-[11px] font-semibold text-kr-danger">
                                             Otomatis saat pembatalan H-1 &middot; tetap masuk pemasukan
                                         </p>
                                     @endif
@@ -224,7 +224,7 @@
                                     @unless ($hangus)
                                         <button type="button"
                                                 data-bayar-toggle="{{ $bayar->id }}"
-                                                class="shrink-0 rounded-lg border border-slate-300 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-100">
+                                                class="shrink-0 rounded-lg border border-kr-line-strong bg-white px-2.5 py-1 text-[11px] font-semibold text-kr-muted transition hover:bg-kr-soft">
                                             Ubah
                                         </button>
                                     @endunless
@@ -233,29 +233,29 @@
 
                             @if ($pemilik)
                                 @if ($hangus)
-                                    <p class="mt-2 border-t border-rose-200 pt-2 text-[11px] text-rose-600">
+                                    <p class="mt-2 border-t border-rose-200 pt-2 text-[11px] text-kr-danger">
                                         DP hangus dibuat otomatis oleh sistem sehingga tidak dapat diubah atau dihapus.
                                     </p>
                                 @else
-                                    <div id="form-bayar-{{ $bayar->id }}" class="mt-2 hidden border-t border-slate-200 pt-2">
+                                    <div id="form-bayar-{{ $bayar->id }}" class="mt-2 hidden border-t border-kr-line pt-2">
                                         <form method="POST" action="{{ route('pembayaran.update', $bayar) }}" class="space-y-2">
                                             @csrf
                                             @method('PUT')
 
                                             <div class="grid grid-cols-2 gap-2">
                                                 <div>
-                                                    <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400" for="tanggal-{{ $bayar->id }}">Tanggal</label>
+                                                    <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint" for="tanggal-{{ $bayar->id }}">Tanggal</label>
                                                     <input id="tanggal-{{ $bayar->id }}"
                                                            type="date"
                                                            name="tanggal_bayar"
                                                            value="{{ old('tanggal_bayar', $bayar->tanggal_bayar?->toDateString()) }}"
                                                            max="{{ today()->toDateString() }}"
                                                            required
-                                                           class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25">
+                                                           class="w-full rounded-lg border border-kr-line-strong bg-white px-2.5 py-2 text-base outline-none focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25">
                                                 </div>
 
                                                 <div>
-                                                    <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400" for="nominal-{{ $bayar->id }}">Nominal</label>
+                                                    <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint" for="nominal-{{ $bayar->id }}">Nominal</label>
                                                     <input id="nominal-{{ $bayar->id }}"
                                                            type="number"
                                                            name="nominal"
@@ -264,15 +264,15 @@
                                                            inputmode="decimal"
                                                            value="{{ old('nominal', $bayar->nominal) }}"
                                                            required
-                                                           class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25">
+                                                           class="w-full rounded-lg border border-kr-line-strong bg-white px-2.5 py-2 text-base outline-none focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25">
                                                 </div>
                                             </div>
 
                                             <div>
-                                                <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400" for="jenis-{{ $bayar->id }}">Jenis</label>
+                                                <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint" for="jenis-{{ $bayar->id }}">Jenis</label>
                                                 <select id="jenis-{{ $bayar->id }}"
                                                         name="jenis"
-                                                        class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25">
+                                                        class="w-full rounded-lg border border-kr-line-strong bg-white px-2.5 py-2 text-base outline-none focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25">
                                                     @foreach (['dp' => 'DP', 'pelunasan' => 'Pelunasan'] as $nilai => $label)
                                                         <option value="{{ $nilai }}" @selected(old('jenis', $bayar->jenis) === $nilai)>{{ $label }}</option>
                                                     @endforeach
@@ -280,25 +280,25 @@
                                             </div>
 
                                             <div>
-                                                <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400" for="catatan-{{ $bayar->id }}">Catatan</label>
+                                                <label class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint" for="catatan-{{ $bayar->id }}">Catatan</label>
                                                 <input id="catatan-{{ $bayar->id }}"
                                                        type="text"
                                                        name="catatan"
                                                        maxlength="500"
                                                        value="{{ old('catatan', $bayar->catatan) }}"
                                                        placeholder="Opsional"
-                                                       class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25">
+                                                       class="w-full rounded-lg border border-kr-line-strong bg-white px-2.5 py-2 text-base outline-none focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25">
                                             </div>
 
                                             <div class="flex items-center gap-2">
                                                 <button type="submit"
-                                                        class="rounded-lg bg-orange-600 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-orange-700">
+                                                        class="rounded-lg bg-kr-primary px-3 py-1.5 text-xs font-bold text-white transition hover:bg-kr-accent">
                                                     Simpan
                                                 </button>
 
                                                 <button type="button"
                                                         data-bayar-toggle="{{ $bayar->id }}"
-                                                        class="rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-500 transition hover:bg-slate-100">
+                                                        class="rounded-lg px-2 py-1.5 text-xs font-semibold text-kr-muted transition hover:bg-kr-soft">
                                                     Tutup
                                                 </button>
                                             </div>
@@ -312,7 +312,7 @@
                                             @method('DELETE')
 
                                             <button type="submit"
-                                                    class="rounded-lg px-2 py-1.5 text-xs font-semibold text-rose-600 transition hover:bg-rose-50">
+                                                    class="rounded-lg px-2 py-1.5 text-xs font-semibold text-kr-danger transition hover:bg-rose-50">
                                                 Hapus pembayaran
                                             </button>
                                         </form>
@@ -324,7 +324,7 @@
                 </div>
             </div>
         @else
-            <p class="mt-3 rounded-xl border border-dashed border-slate-200 px-3 py-4 text-center text-xs text-slate-400">
+            <p class="mt-3 rounded-xl border border-dashed border-kr-line px-3 py-4 text-center text-xs text-kr-faint">
                 Belum ada pembayaran yang dicatat.
             </p>
         @endif
@@ -333,29 +333,29 @@
         @if ($bisaBayar)
             <form method="POST"
                   action="{{ route('pembayaran.store', $pesanan) }}"
-                  class="mt-4 space-y-3 border-t border-slate-100 pt-4">
+                  class="mt-4 space-y-3 border-t border-kr-line/70 pt-4">
                 @csrf
 
-                <h3 class="text-xs font-bold text-slate-800">Tambah Pembayaran</h3>
-                <p class="text-[11px] text-slate-400">
-                    Sisa tagihan saat ini <b class="text-slate-600">{{ $rupiah($pesanan->sisa_tagihan) }}</b>.
+                <h3 class="text-xs font-bold text-kr-ink">Tambah Pembayaran</h3>
+                <p class="text-[11px] text-kr-faint">
+                    Sisa tagihan saat ini <b class="text-kr-muted">{{ $rupiah($pesanan->sisa_tagihan) }}</b>.
                     Nominal tidak boleh melebihi sisa tagihan.
                 </p>
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label for="tanggal_bayar" class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Tanggal bayar</label>
+                        <label for="tanggal_bayar" class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint">Tanggal bayar</label>
                         <input id="tanggal_bayar"
                                name="tanggal_bayar"
                                type="date"
                                value="{{ old('tanggal_bayar', today()->toDateString()) }}"
                                max="{{ today()->toDateString() }}"
                                required
-                               class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25 @error('tanggal_bayar') border-rose-400 @enderror">
+                               class="w-full rounded-xl border border-kr-line-strong bg-white px-3 py-3 text-base outline-none transition focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25 @error('tanggal_bayar') border-rose-400 @enderror">
                     </div>
 
                     <div>
-                        <label for="nominal" class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Nominal</label>
+                        <label for="nominal" class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint">Nominal</label>
                         <input id="nominal"
                                name="nominal"
                                type="number"
@@ -365,20 +365,20 @@
                                value="{{ old('nominal') }}"
                                placeholder="0"
                                required
-                               class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25 @error('nominal') border-rose-400 @enderror">
+                               class="w-full rounded-xl border border-kr-line-strong bg-white px-3 py-3 text-base outline-none transition focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25 @error('nominal') border-rose-400 @enderror">
                     </div>
                 </div>
 
                 <div>
-                    <span class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Jenis pembayaran</span>
+                    <span class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint">Jenis pembayaran</span>
                     <div class="grid grid-cols-2 gap-2">
                         @foreach (['dp' => 'DP', 'pelunasan' => 'Pelunasan'] as $nilai => $label)
-                            <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-700 transition has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 has-[:checked]:text-orange-700">
+                            <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-kr-line-strong px-3 py-2 text-sm text-kr-brown transition has-[:checked]:border-kr-primary has-[:checked]:bg-kr-tint has-[:checked]:text-kr-accent">
                                 <input type="radio"
                                        name="jenis"
                                        value="{{ $nilai }}"
                                        @checked(old('jenis', 'dp') === $nilai)
-                                       class="h-4 w-4 accent-orange-600">
+                                       class="h-4 w-4 accent-kr-primary">
                                 {{ $label }}
                             </label>
                         @endforeach
@@ -386,18 +386,18 @@
                 </div>
 
                 <div>
-                    <label for="catatan" class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Catatan <span class="font-normal normal-case text-slate-400">(opsional)</span></label>
+                    <label for="catatan" class="mb-1 block text-[10px] font-bold uppercase tracking-wide text-kr-faint">Catatan <span class="font-normal normal-case text-kr-faint">(opsional)</span></label>
                     <input id="catatan"
                            name="catatan"
                            type="text"
                            maxlength="500"
                            value="{{ old('catatan') }}"
                            placeholder="Contoh: transfer BCA"
-                           class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25">
+                           class="w-full rounded-xl border border-kr-line-strong bg-white px-3 py-3 text-base outline-none transition focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25">
                 </div>
 
                 <button type="submit"
-                        class="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm shadow-orange-600/25 transition hover:bg-orange-700 active:scale-[0.99]">
+                        class="inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-[14px] bg-kr-primary px-5 py-3 text-base font-bold text-white shadow-kr-primary/25 transition hover:bg-kr-accent active:scale-[0.99]">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -410,10 +410,10 @@
     {{-- Zona berisiko --}}
     @if ($pemilik)
         <section class="mt-4 rounded-2xl border border-rose-200 bg-rose-50/60 p-4">
-            <h2 class="text-sm font-bold text-rose-800">Zona berisiko</h2>
+            <h2 class="text-sm font-bold text-kr-danger">Zona berisiko</h2>
 
             @if ($bisaHapus)
-                <p class="mt-1 text-xs text-rose-700">
+                <p class="mt-1 text-xs text-kr-danger">
                     Pesanan ini belum memiliki pembayaran sehingga masih bisa dihapus permanen.
                 </p>
 
@@ -425,12 +425,12 @@
                     @method('DELETE')
 
                     <button type="submit"
-                            class="inline-flex items-center gap-1.5 rounded-xl border border-rose-300 bg-white px-3.5 py-2 text-xs font-bold text-rose-700 transition hover:bg-rose-100">
+                            class="inline-flex items-center gap-1.5 rounded-xl border border-rose-300 bg-white px-3.5 py-2 text-xs font-bold text-kr-danger transition hover:bg-rose-100">
                         Hapus Pesanan
                     </button>
                 </form>
             @else
-                <p class="mt-1 text-xs text-rose-700">
+                <p class="mt-1 text-xs text-kr-danger">
                     @if ($bisaBayar)
                         Pesanan sudah memiliki pembayaran sehingga tidak bisa dihapus.
                         Gunakan tombol <b>Batalkan</b> di bagian atas halaman.
@@ -446,7 +446,7 @@
 
     <div class="mt-4">
         <a href="{{ route('pesanan.index') }}"
-           class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-slate-700">
+           class="inline-flex items-center gap-1.5 text-sm font-semibold text-kr-muted transition hover:text-kr-brown">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
             </svg>

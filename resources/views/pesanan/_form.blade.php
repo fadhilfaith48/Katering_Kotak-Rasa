@@ -1,8 +1,8 @@
 @php
     $isEdit = isset($pesanan) && $pesanan->exists;
 
-    $kelasInput = 'w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/25';
-    $kelasLabel = 'mb-1 block text-[11px] font-semibold uppercase tracking-wide text-slate-500';
+    $kelasInput = 'w-full rounded-xl border border-kr-line-strong bg-white px-3 py-3 text-base text-kr-ink outline-none transition focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25';
+    $kelasLabel = 'mb-1 block text-[11px] font-semibold uppercase tracking-wide text-kr-muted';
 
     $rupiah = fn ($angka) => 'Rp '.number_format((float) $angka, 0, ',', '.');
 
@@ -18,7 +18,7 @@
 
 {{-- Ringkasan error --}}
 @if ($errors->any())
-    <div class="mb-4 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2.5 text-sm text-rose-800">
+    <div class="mb-4 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2.5 text-sm text-kr-danger">
         <p class="font-semibold">Periksa kembali isian berikut:</p>
         <ul class="mt-1 list-inside list-disc space-y-0.5 text-xs">
             @foreach ($errors->all() as $pesan)
@@ -29,8 +29,8 @@
 @endif
 
 {{-- Pelanggan & jadwal --}}
-<section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-    <h2 class="text-sm font-bold text-slate-900">Pelanggan &amp; Jadwal</h2>
+<section class="rounded-2xl border border-kr-line bg-white p-4 shadow-kr-card">
+    <h2 class="text-sm font-bold text-kr-ink">Pelanggan &amp; Jadwal</h2>
 
     <div class="mt-3 space-y-3">
         <div>
@@ -45,8 +45,8 @@
             </select>
         </div>
 
-        <div id="pelanggan-baru" class="space-y-3 rounded-xl border border-dashed border-orange-200 bg-orange-50/50 p-3 {{ $pakaiPelangganBaru ? '' : 'hidden' }}">
-            <p class="text-[11px] font-semibold uppercase tracking-wide text-orange-700/80">Pelanggan baru</p>
+        <div id="pelanggan-baru" class="space-y-3 rounded-xl border border-dashed border-kr-line bg-kr-tint/50 p-3 {{ $pakaiPelangganBaru ? '' : 'hidden' }}">
+            <p class="text-[11px] font-semibold uppercase tracking-wide text-kr-accent/80">Pelanggan baru</p>
 
             <div>
                 <label for="pelanggan_baru_nama" class="{{ $kelasLabel }}">Nama pelanggan</label>
@@ -59,7 +59,7 @@
             </div>
 
             <div>
-                <label for="pelanggan_baru_wa" class="{{ $kelasLabel }}">Nomor WhatsApp <span class="font-normal normal-case text-slate-400">(opsional)</span></label>
+                <label for="pelanggan_baru_wa" class="{{ $kelasLabel }}">Nomor WhatsApp <span class="font-normal normal-case text-kr-faint">(opsional)</span></label>
                 <input id="pelanggan_baru_wa"
                        name="pelanggan_baru_wa"
                        type="tel"
@@ -81,7 +81,7 @@
             </div>
 
             <div>
-                <label for="tanggal_acara" class="{{ $kelasLabel }}">Tanggal acara <span class="text-rose-500">*</span></label>
+                <label for="tanggal_acara" class="{{ $kelasLabel }}">Tanggal acara <span class="text-kr-danger">*</span></label>
                 <input id="tanggal_acara"
                        name="tanggal_acara"
                        type="date"
@@ -96,12 +96,12 @@
             <span class="{{ $kelasLabel }}">Jalur pesanan</span>
             <div class="grid grid-cols-2 gap-2">
                 @foreach (['whatsapp' => 'WhatsApp', 'langsung' => 'Langsung'] as $nilai => $label)
-                    <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 transition has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 has-[:checked]:text-orange-700">
+                    <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-kr-line-strong bg-white px-3 py-2.5 text-sm text-kr-brown transition has-[:checked]:border-kr-primary has-[:checked]:bg-kr-tint has-[:checked]:text-kr-accent">
                         <input type="radio"
                                name="jalur_pesanan"
                                value="{{ $nilai }}"
                                @checked(old('jalur_pesanan', $isEdit ? $pesanan->jalur_pesanan : 'whatsapp') === $nilai)
-                               class="h-4 w-4 accent-orange-600">
+                               class="h-4 w-4 accent-kr-primary">
                         {{ $label }}
                     </label>
                 @endforeach
@@ -111,16 +111,16 @@
 </section>
 
 {{-- Item pesanan --}}
-<section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+<section class="rounded-2xl border border-kr-line bg-white p-4 shadow-kr-card">
     <div class="flex items-start justify-between gap-2">
         <div>
-            <h2 class="text-sm font-bold text-slate-900">Item Pesanan</h2>
-            <p class="mt-0.5 text-[11px] text-slate-400">Harga otomatis mengikuti menu, masih bisa diubah.</p>
+            <h2 class="text-sm font-bold text-kr-ink">Item Pesanan</h2>
+            <p class="mt-0.5 text-[11px] text-kr-faint">Harga otomatis mengikuti menu, masih bisa diubah.</p>
         </div>
 
         <button type="button"
                 id="tambah-item"
-                class="inline-flex shrink-0 items-center gap-1 rounded-lg border border-orange-200 bg-orange-50 px-2.5 py-1.5 text-xs font-semibold text-orange-700 transition hover:bg-orange-100">
+                class="inline-flex shrink-0 items-center gap-1 rounded-lg border border-kr-line bg-kr-tint px-2.5 py-1.5 text-xs font-semibold text-kr-accent transition hover:bg-kr-soft">
             <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
@@ -133,12 +133,12 @@
          data-harga-menu='@json($menuHarga)'
          data-next-index="{{ $nomorBerikut }}">
         @foreach ($items as $indeks => $item)
-            <div class="item-row rounded-xl border border-slate-200 bg-slate-50/60 p-3">
+            <div class="item-row rounded-xl border border-kr-line bg-kr-tint/60 p-3">
                 <div class="flex items-center justify-between gap-2">
-                    <span class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Item <span data-nomor>{{ $loop->iteration }}</span></span>
+                    <span class="text-[10px] font-bold uppercase tracking-wide text-kr-faint">Item <span data-nomor>{{ $loop->iteration }}</span></span>
                     <button type="button"
                             data-hapus
-                            class="rounded-md px-2 py-0.5 text-[11px] font-semibold text-rose-600 transition hover:bg-rose-50">
+                            class="rounded-md px-2 py-0.5 text-[11px] font-semibold text-kr-danger transition hover:bg-rose-50">
                         Hapus
                     </button>
                 </div>
@@ -180,24 +180,24 @@
                     </div>
                 </div>
 
-                <p class="mt-2 text-right text-xs text-slate-500">
-                    Subtotal <span data-subtotal class="font-bold text-slate-800">{{ $rupiah((int) ($item['jumlah'] ?? 0) * (float) ($item['harga_satuan'] ?? 0)) }}</span>
+                <p class="mt-2 text-right text-xs text-kr-muted">
+                    Subtotal <span data-subtotal class="font-bold text-kr-ink">{{ $rupiah((int) ($item['jumlah'] ?? 0) * (float) ($item['harga_satuan'] ?? 0)) }}</span>
                 </p>
             </div>
         @endforeach
     </div>
 
-    <div class="mt-3 flex items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-white">
-        <span class="text-xs font-semibold uppercase tracking-wide text-slate-300">Total pesanan</span>
+    <div class="mt-3 flex items-center justify-between rounded-xl bg-kr-ink px-4 py-3 text-white">
+        <span class="text-xs font-semibold uppercase tracking-wide text-white/70">Total pesanan</span>
         <span id="total-preview" class="text-lg font-bold">{{ $rupiah($totalAwal) }}</span>
     </div>
 </section>
 
 {{-- Catatan & status --}}
-<section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+<section class="rounded-2xl border border-kr-line bg-white p-4 shadow-kr-card">
     <div class="space-y-3">
         <div>
-            <label for="catatan_khusus" class="{{ $kelasLabel }}">Catatan khusus <span class="font-normal normal-case text-slate-400">(opsional)</span></label>
+            <label for="catatan_khusus" class="{{ $kelasLabel }}">Catatan khusus <span class="font-normal normal-case text-kr-faint">(opsional)</span></label>
             <textarea id="catatan_khusus"
                       name="catatan_khusus"
                       rows="3"
@@ -212,7 +212,7 @@
 
                 @if ($pesanan->status === 'batal')
                     <input type="hidden" name="status" value="batal">
-                    <p class="rounded-xl bg-rose-50 px-3 py-2.5 text-sm font-semibold text-rose-700">
+                    <p class="rounded-xl bg-rose-50 px-3 py-2.5 text-sm font-semibold text-kr-danger">
                         Pesanan sudah dibatalkan. Status tidak dapat diubah lagi.
                     </p>
                 @else
@@ -221,7 +221,7 @@
                             <option value="{{ $nilai }}" @selected(old('status', $pesanan->status) === $nilai)>{{ $label }}</option>
                         @endforeach
                     </select>
-                    <p class="mt-1 text-[11px] text-slate-400">
+                    <p class="mt-1 text-[11px] text-kr-faint">
                         Pembatalan pesanan dilakukan dari halaman detail oleh Pemilik agar DP hangus tercatat otomatis.
                     </p>
                 @endif
@@ -233,12 +233,12 @@
 {{-- Tombol aksi --}}
 <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
     <a href="{{ $isEdit ? route('pesanan.show', $pesanan) : route('pesanan.index') }}"
-       class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+       class="inline-flex items-center justify-center rounded-xl border border-kr-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-kr-muted transition hover:bg-kr-soft">
         Batal
     </a>
 
     <button type="submit"
-            class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-orange-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-orange-600/30 transition hover:bg-orange-700">
+            class="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-[14px] bg-kr-primary px-5 py-3 text-base font-bold text-white shadow-kr-primary/30 transition hover:bg-kr-accent">
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
         </svg>
@@ -248,12 +248,12 @@
 
 {{-- Baris item untuk ditambahkan lewat JS --}}
 <template id="item-row-template">
-    <div class="item-row rounded-xl border border-slate-200 bg-slate-50/60 p-3">
+    <div class="item-row rounded-xl border border-kr-line bg-kr-tint/60 p-3">
         <div class="flex items-center justify-between gap-2">
-            <span class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Item <span data-nomor>1</span></span>
+            <span class="text-[10px] font-bold uppercase tracking-wide text-kr-faint">Item <span data-nomor>1</span></span>
             <button type="button"
                     data-hapus
-                    class="rounded-md px-2 py-0.5 text-[11px] font-semibold text-rose-600 transition hover:bg-rose-50">
+                    class="rounded-md px-2 py-0.5 text-[11px] font-semibold text-kr-danger transition hover:bg-rose-50">
                 Hapus
             </button>
         </div>
@@ -292,8 +292,8 @@
             </div>
         </div>
 
-        <p class="mt-2 text-right text-xs text-slate-500">
-            Subtotal <span data-subtotal class="font-bold text-slate-800">Rp 0</span>
+        <p class="mt-2 text-right text-xs text-kr-muted">
+            Subtotal <span data-subtotal class="font-bold text-kr-ink">Rp 0</span>
         </p>
     </div>
 </template>
