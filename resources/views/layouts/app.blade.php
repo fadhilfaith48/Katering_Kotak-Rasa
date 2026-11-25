@@ -26,9 +26,52 @@
         }
     @endphp
 
+    {{-- Navigasi samping untuk layar besar --}}
+    <aside class="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-slate-200 bg-white px-4 py-5 lg:flex"
+           aria-label="Navigasi desktop">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 px-2">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-orange-600 text-white shadow-sm shadow-orange-600/30">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5 12 3 3 7.5v9L12 21l9-4.5v-9Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5 12 12l9-4.5M12 12v9" />
+                </svg>
+            </span>
+            <span class="leading-tight">
+                <span class="block text-sm font-bold tracking-tight text-slate-900">KotakRasa</span>
+                <span class="block text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">Panel Usaha</span>
+            </span>
+        </a>
+
+        <p class="mt-8 px-3 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Menu utama</p>
+
+        <nav class="mt-2 space-y-1" aria-label="Navigasi samping">
+            @foreach ($menuBawah as $menu)
+                @php
+                    $aktif = request()->routeIs($menu['cocok']);
+                @endphp
+                <a href="{{ route($menu['route']) }}"
+                   class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition {{ $aktif ? 'bg-orange-50 text-orange-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800' }}"
+                   @if ($aktif) aria-current="page" @endif>
+                    <x-nav-icon :icon="$menu['icon']" class="shrink-0" />
+                    <span>{{ $menu['label'] }}</span>
+                    @if ($aktif)
+                        <span class="ml-auto h-1.5 w-1.5 rounded-full bg-orange-600"></span>
+                    @endif
+                </a>
+            @endforeach
+        </nav>
+
+        <div class="mt-auto rounded-xl bg-slate-50 p-3">
+            <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Akun aktif</p>
+            <p class="mt-1 truncate text-sm font-semibold text-slate-800">{{ $pengguna?->name }}</p>
+            <p class="text-[11px] text-slate-400">{{ $pengguna?->isPemilik() ? 'Pemilik' : 'Pencatat' }}</p>
+        </div>
+    </aside>
+
+    <div class="min-h-screen lg:pl-64">
     {{-- Header --}}
-    <header class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur">
-        <div class="mx-auto flex max-w-md items-center justify-between gap-3 px-4 py-3">
+    <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
+        <div class="mx-auto flex max-w-md items-center justify-between gap-3 px-4 py-3 lg:max-w-6xl lg:px-8">
             <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5">
                 <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-orange-600 text-white shadow-sm shadow-orange-600/30">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -65,7 +108,7 @@
     </header>
 
     {{-- Konten --}}
-    <main class="mx-auto w-full max-w-md px-4 pb-28 pt-5">
+    <main class="mx-auto w-full max-w-md px-4 pb-28 pt-5 lg:max-w-6xl lg:px-8 lg:pb-10 lg:pt-6">
         @if (session('success'))
             <div class="mb-4 flex items-start gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm text-emerald-800">
                 <svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -88,7 +131,7 @@
     </main>
 
     {{-- Navigasi bawah --}}
-    <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur"
+    <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
          aria-label="Navigasi utama">
         <div class="mx-auto flex max-w-md items-stretch px-1">
             @foreach ($menuBawah as $menu)
@@ -98,30 +141,13 @@
                 <a href="{{ route($menu['route']) }}"
                    class="flex flex-1 flex-col items-center gap-1 px-1 py-2.5 text-[10px] font-semibold transition {{ $aktif ? 'text-orange-600' : 'text-slate-400 hover:text-slate-600' }}"
                    @if ($aktif) aria-current="page" @endif>
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                        @switch($menu['icon'])
-                            @case('home')
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                                @break
-                            @case('bag')
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z" />
-                                @break
-                            @case('calendar')
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                                @break
-                            @case('wallet')
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 1 3 7.5m18 4.5v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9v3m18 0h-5.25a.75.75 0 0 0-.75.75v.5c0 .414.336.75.75.75H21" />
-                                @break
-                            @case('chart')
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
-                                @break
-                        @endswitch
-                    </svg>
+                    <x-nav-icon :icon="$menu['icon']" />
                     <span>{{ $menu['label'] }}</span>
                 </a>
             @endforeach
         </div>
     </nav>
+    </div>
 
     @stack('scripts')
 </body>
