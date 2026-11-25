@@ -97,13 +97,46 @@ class Pesanan extends Model
     }
 
     /**
-     * Total box/snack yang dipesan (dari seluruh item).
+     * Total seluruh item yang dipesan (box + snack).
      */
-    public function getJumlahBoxAttribute(): int
+    public function getJumlahItemAttribute(): int
     {
         $items = $this->relationLoaded('items') ? $this->items : $this->items()->get();
 
         return (int) $items->sum('jumlah');
+    }
+
+    /**
+     * Total item dengan menu berjenis box.
+     */
+    public function getJumlahBoxAttribute(): int
+    {
+        return $this->jumlahMenurutJenis('box');
+    }
+
+    /**
+     * Total item dengan menu berjenis snack.
+     */
+    public function getJumlahSnackAttribute(): int
+    {
+        return $this->jumlahMenurutJenis('snack');
+    }
+
+    /**
+     * Hitung jumlah item untuk satu jenis menu.
+     *
+     * Pastikan relasi items.menu di-eager-load bila dipakai dalam perulangan
+     * supaya tidak menimbulkan N+1 query.
+     */
+    private function jumlahMenurutJenis(string $jenis): int
+    {
+        $items = $this->relationLoaded('items')
+            ? $this->items
+            : $this->items()->with('menu')->get();
+
+        return (int) $items
+            ->filter(fn ($item) => $item->menu?->jenis === $jenis)
+            ->sum('jumlah');
     }
 
     /**
