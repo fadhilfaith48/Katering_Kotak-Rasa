@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
@@ -64,10 +65,15 @@ Route::middleware('auth')->group(function () {
         'deskripsi' => 'Jadwal pesanan per tanggal acara akan tersedia pada tahap berikutnya.',
     ])->name('jadwal.index');
 
-    Route::view('/pengeluaran', 'placeholder', [
-        'judul' => 'Pengeluaran',
-        'deskripsi' => 'Pencatatan pengeluaran usaha akan tersedia pada tahap berikutnya.',
-    ])->name('pengeluaran.index');
+    /*
+    |--------------------------------------------------------------------------
+    | F3 — Pencatatan pengeluaran
+    |--------------------------------------------------------------------------
+    | Lihat & tambah: Pemilik dan Pencatat.
+    | Ubah & hapus: hanya Pemilik (dijaga di controller dan FormRequest).
+    */
+    Route::resource('pengeluaran', PengeluaranController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
     // Laporan keuangan hanya untuk Pemilik.
     Route::middleware('role:pemilik')->group(function () {
