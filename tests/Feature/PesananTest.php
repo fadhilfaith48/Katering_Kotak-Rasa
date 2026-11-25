@@ -296,4 +296,86 @@ class PesananTest extends TestCase
             ->assertSee('PSN-000002')
             ->assertDontSee('PSN-000001');
     }
+
+    private function snack(): Menu
+    {
+        return Menu::create([
+            'nama_menu' => 'Snack Box Lemper',
+            'jenis' => 'snack',
+            'harga_standar' => 12000,
+        ]);
+    }
+
+    private function pesananBoxDanSnack(array $atribut = []): Pesanan
+    {
+        $pesanan = $this->pesananContoh($atribut);
+
+        $pesanan->items()->first()->update([
+            'jumlah' => 50,
+            'subtotal' => 1250000,
+        ]);
+
+        $pesanan->items()->create([
+            'menu_id' => $this->snack()->id,
+            'jumlah' => 20,
+            'harga_satuan' => 12000,
+            'subtotal' => 240000,
+        ]);
+
+        return $pesanan;
+    }
+
+    public function test_accessor_jumlah_item_box_dan_snack_terpisah(): void
+    {
+        $pesanan = $this->pesananBoxDanSnack();
+        $pesanan->load('items.menu');
+
+        $this->assertSame(70, $pesanan->jumlah_item);
+        $this->assertSame(50, $pesanan->jumlah_box);
+        $this->assertSame(20, $pesanan->jumlah_snack);
+    }
+
+    public function test_tampilan_memisahkan_jumlah_box_dan_snack(): void
+    {
+        $pemilik = $this->pengguna('pemilik');
+        $pesanan = $this->pesananBoxDanSnack(['tanggal_acara' => today()->toDateString()]);
+
+        $this->actingAs($pemilik)
+            ->get(route('pesanan.index'))
+            ->assertOk()
+            ->assertSee('50 box')
+            ->assertSee('20 snack')
+            ->assertDontSee('70 box');
+
+        $this->actingAs($pemilik)
+            ->get(route('pesanan.show', $pesanan))
+            ->assertOk()
+            ->assertSee('Jumlah box')
+            ->assertSee('Jumlah snack')
+            ->assertSee('50 box')
+            ->assertSee('20 snack')
+            ->assertDontSee('70 box');
+
+        $this->actingAs($pemilik)
+            ->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('50 box')
+            ->assertSee('20 snack')
+            ->assertDontSee('70 box');
+    }
+
+    public function test_kartu_box_aktif_hanya_menghitung_menu_box(): void
+    {
+        $pemilik = $this->pengguna('pemilik');
+        $this->pesananBoxDanSnack();
+
+        // Tanggal acara helper adalah H+2, jadi hanya kartu rekap yang tampil.
+        // Angka dan satuan dipisah tag span, jadi cek memakai teks tampilan.
+        $this->actingAs($pemilik)
+            ->get(route('dashboard'))
+            ->assertOk()
+            ->assertSeeText('50 box')
+            ->assertSeeText('20 snack')
+            ->assertDontSeeText('70 box');
+    }
 }
