@@ -143,7 +143,7 @@
                             {{ $pesanan->pelanggan?->nama ?? 'Pelanggan' }}
                         </span>
                         <span class="mt-0.5 block text-[11px] text-slate-400">
-                            {{ $labelHari }} &middot; {{ $jumlahBox }} box
+                            {{ $labelHari }} &middot; {{ $jumlahBox }} item
                         </span>
                     </span>
 

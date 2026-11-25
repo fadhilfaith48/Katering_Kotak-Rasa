@@ -95,7 +95,7 @@
                     {{ $item->tanggal_acara?->locale('id')->isoFormat('ddd, D MMM YYYY') }}
                 </span>
 
-                <span>{{ $item->jumlah_box }} box</span>
+                <span>{{ $item->jumlah_box }} item</span>
 
                 <span class="inline-flex items-center gap-1">
                     <span class="h-1 w-1 rounded-full bg-slate-300"></span>

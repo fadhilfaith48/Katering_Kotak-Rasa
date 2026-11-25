@@ -83,8 +83,8 @@
             </div>
 
             <div>
-                <dt class="font-semibold uppercase tracking-wide text-slate-400">Jumlah box</dt>
-                <dd class="mt-0.5 font-semibold text-slate-700">{{ $pesanan->jumlah_box }} box</dd>
+                <dt class="font-semibold uppercase tracking-wide text-slate-400">Jumlah item</dt>
+                <dd class="mt-0.5 font-semibold text-slate-700">{{ $pesanan->jumlah_box }} item</dd>
             </div>
         </dl>
 
