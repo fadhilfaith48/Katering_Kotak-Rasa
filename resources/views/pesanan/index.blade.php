@@ -27,7 +27,7 @@
     @endphp
 
     {{-- Pencarian --}}
-    <form method="GET" action="{{ route('pesanan.index') }}" class="mb-3">
+    <form method="GET" action="{{ route('pesanan.index') }}" class="mb-3 lg:max-w-xl">
         @if ($status !== '')
             <input type="hidden" name="status" value="{{ $status }}">
         @endif
@@ -73,9 +73,10 @@
     </div>
 
     {{-- Daftar --}}
+    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-4">
     @forelse ($pesanan as $item)
         <a href="{{ route('pesanan.show', $item) }}"
-           class="mb-3 block rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-orange-200 hover:shadow-md active:scale-[0.995]">
+           class="mb-3 block rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-orange-200 hover:shadow-md active:scale-[0.995] lg:mb-0">
             <div class="flex items-start justify-between gap-2">
                 <div class="min-w-0">
                     <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">{{ $item->nomor }}</p>
@@ -113,13 +114,16 @@
             </div>
         </a>
     @empty
-        <x-empty-state judul="Belum ada pesanan" deskripsi="Pesanan yang kamu catat akan muncul di sini.">
-            <a href="{{ route('pesanan.create') }}"
-               class="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/25 transition hover:bg-orange-700">
-                Buat Pesanan Pertama
-            </a>
-        </x-empty-state>
+        <div class="lg:col-span-2">
+            <x-empty-state judul="Belum ada pesanan" deskripsi="Pesanan yang kamu catat akan muncul di sini.">
+                <a href="{{ route('pesanan.create') }}"
+                   class="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/25 transition hover:bg-orange-700">
+                    Buat Pesanan Pertama
+                </a>
+            </x-empty-state>
+        </div>
     @endforelse
+    </div>
 
     @if ($pesanan->hasPages())
         <div class="mt-4">

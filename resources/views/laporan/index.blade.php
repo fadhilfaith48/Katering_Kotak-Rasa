@@ -12,7 +12,7 @@
 
     {{-- Filter bulan --}}
     <form method="GET" action="{{ route('laporan.index') }}"
-          class="mb-4 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+          class="mb-4 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm lg:max-w-xl">
         <label for="bulan" class="mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-slate-500">
             Bulan laporan
         </label>
@@ -32,7 +32,7 @@
     </form>
 
     {{-- Ringkasan keuangan --}}
-    <section class="mb-5 rounded-2xl bg-slate-900 px-4 py-4 text-white shadow-sm">
+    <section class="mb-5 rounded-2xl bg-slate-900 px-4 py-4 text-white shadow-sm lg:px-6 lg:py-5">
         <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-300">Pemasukan &middot; {{ $labelBulan }}</p>
         <p class="mt-1 text-2xl font-bold tracking-tight">{{ $rupiah($pemasukan) }}</p>
 
@@ -58,8 +58,9 @@
         @endif
     </section>
 
+    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-5">
     {{-- Rincian pengeluaran per kategori --}}
-    <section class="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <section class="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:mb-0">
         <div class="flex items-start justify-between gap-3">
             <div>
                 <h2 class="text-sm font-bold text-slate-900">Pengeluaran per kategori</h2>
@@ -142,4 +143,5 @@
             </x-empty-state>
         @endforelse
     </section>
+    </div>
 @endsection

@@ -56,8 +56,9 @@
     @endif
 
     {{-- Daftar --}}
+    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-4">
     @forelse ($pengeluaran as $item)
-        <div class="mb-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="mb-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:mb-0">
             <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
                     <p class="truncate text-sm font-bold text-slate-900">{{ $item->keterangan }}</p>
@@ -99,14 +100,17 @@
             </div>
         </div>
     @empty
-        <x-empty-state judul="Belum ada pengeluaran"
-                       deskripsi="Pengeluaran yang kamu catat pada bulan ini akan muncul di sini.">
-            <a href="{{ route('pengeluaran.create') }}"
-               class="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/25 transition hover:bg-orange-700">
-                Catat Pengeluaran Pertama
-            </a>
-        </x-empty-state>
+        <div class="lg:col-span-2">
+            <x-empty-state judul="Belum ada pengeluaran"
+                           deskripsi="Pengeluaran yang kamu catat pada bulan ini akan muncul di sini.">
+                <a href="{{ route('pengeluaran.create') }}"
+                   class="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/25 transition hover:bg-orange-700">
+                    Catat Pengeluaran Pertama
+                </a>
+            </x-empty-state>
+        </div>
     @endforelse
+    </div>
 
     @if ($pengeluaran->hasPages())
         <div class="mt-4">

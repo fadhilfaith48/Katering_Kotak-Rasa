@@ -44,6 +44,7 @@
         </x-slot:aksi>
     </x-page-header>
 
+    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-5">
     {{-- Ringkasan --}}
     <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <div class="flex items-start justify-between gap-2">
@@ -60,7 +61,7 @@
             </div>
         </div>
 
-        <dl class="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-3 text-xs">
+        <dl class="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-3 text-xs lg:grid-cols-4">
             <div>
                 <dt class="font-semibold uppercase tracking-wide text-slate-400">Tanggal pesan</dt>
                 <dd class="mt-0.5 font-semibold text-slate-700">
@@ -102,7 +103,7 @@
     </section>
 
     {{-- Item --}}
-    <section class="mt-4 rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <section class="mt-4 rounded-2xl border border-slate-200 bg-white shadow-sm lg:mt-0">
         <div class="border-b border-slate-100 px-4 py-3">
             <h2 class="text-sm font-bold text-slate-900">Rincian Item</h2>
         </div>
@@ -127,6 +128,7 @@
             <span class="text-lg font-bold text-slate-900">{{ $rupiah($pesanan->total) }}</span>
         </div>
     </section>
+    </div>
 
     {{-- Pembayaran --}}
     <section class="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">

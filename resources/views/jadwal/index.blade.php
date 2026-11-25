@@ -74,8 +74,9 @@
     </div>
 
     {{-- Daftar per tanggal acara --}}
+    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-5">
     @forelse ($grup as $kunciTanggal => $daftar)
-        <section class="mb-5">
+        <section class="mb-5 lg:mb-0">
             <div class="mb-2 flex items-center gap-2">
                 <h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">
                     {{ $labelTanggal((string) $kunciTanggal) }}
@@ -131,12 +132,15 @@
             @endforeach
         </section>
     @empty
-        <x-empty-state judul="Belum ada jadwal"
-                       deskripsi="Tidak ada pesanan pada periode ini. Coba rentang lain atau tambah pesanan baru.">
-            <a href="{{ route('pesanan.create') }}"
-               class="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/25 transition hover:bg-orange-700">
-                Buat Pesanan Baru
-            </a>
-        </x-empty-state>
+        <div class="lg:col-span-2">
+            <x-empty-state judul="Belum ada jadwal"
+                           deskripsi="Tidak ada pesanan pada periode ini. Coba rentang lain atau tambah pesanan baru.">
+                <a href="{{ route('pesanan.create') }}"
+                   class="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/25 transition hover:bg-orange-700">
+                    Buat Pesanan Baru
+                </a>
+            </x-empty-state>
+        </div>
     @endforelse
+    </div>
 @endsection
