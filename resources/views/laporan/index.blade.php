@@ -31,6 +31,32 @@
         </div>
     </form>
 
+    {{-- Ekspor laporan --}}
+    <div class="mb-4 flex flex-col gap-2 rounded-2xl border border-kr-line bg-white p-3 shadow-kr-card sm:flex-row sm:items-center sm:justify-between lg:max-w-xl">
+        <div>
+            <p class="text-[11px] font-bold uppercase tracking-wide text-kr-muted">Unduh laporan</p>
+            <p class="mt-0.5 text-[10px] text-kr-faint">{{ $labelBulan }} &middot; siap dibuka di Excel atau dicetak</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 sm:flex">
+            <a href="{{ route('laporan.export.excel', ['bulan' => $bulan]) }}"
+               class="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-[14px] border border-kr-line-strong bg-white px-3 py-2.5 text-sm font-bold text-kr-brown transition hover:bg-kr-soft active:scale-[0.99]">
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4M4.5 16.5v1.5A2.25 2.25 0 0 0 6.75 20.25h10.5A2.25 2.25 0 0 0 19.5 18v-1.5" />
+                </svg>
+                Excel
+            </a>
+
+            <a href="{{ route('laporan.export.pdf', ['bulan' => $bulan]) }}"
+               class="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-[14px] border border-kr-line-strong bg-white px-3 py-2.5 text-sm font-bold text-kr-brown transition hover:bg-kr-soft active:scale-[0.99]">
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4M4.5 16.5v1.5A2.25 2.25 0 0 0 6.75 20.25h10.5A2.25 2.25 0 0 0 19.5 18v-1.5" />
+                </svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
     {{-- Ringkasan keuangan --}}
     <section class="mb-5 rounded-2xl bg-kr-ink px-4 py-4 text-white shadow-kr-card lg:px-6 lg:py-5">
         <p class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Pemasukan &middot; {{ $labelBulan }}</p>
