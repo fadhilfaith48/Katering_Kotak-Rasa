@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LaporanExportController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PesananController;
@@ -82,5 +83,12 @@ Route::middleware('auth')->group(function () {
     */
     Route::middleware('role:pemilik')->group(function () {
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+
+        // Ekspor laporan bulanan: Excel dan PDF.
+        Route::get('/laporan/export', [LaporanExportController::class, 'excel'])
+            ->name('laporan.export.excel');
+
+        Route::get('/laporan/export/pdf', [LaporanExportController::class, 'pdf'])
+            ->name('laporan.export.pdf');
     });
 });
