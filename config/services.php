@@ -35,4 +35,19 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Ringkasan AI
+    |--------------------------------------------------------------------------
+    |
+    | Kunci hanya dibaca dari .env dan dipakai di server. Jangan pernah
+    | meneruskan nilai ini ke Blade, JavaScript, atau log.
+    */
+    'ai' => [
+        'key' => env('AI_API_KEY'),
+        'model' => env('AI_MODEL', 'gemini-3.5-flash-lite'),
+        'base_url' => env('AI_BASE_URL', 'https://generativelanguage.googleapis.com/v1beta'),
+        'timeout' => (int) env('AI_TIMEOUT', 15),
+    ],
+
 ];
