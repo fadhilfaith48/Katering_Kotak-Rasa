@@ -57,6 +57,47 @@
         </div>
     </div>
 
+    {{-- Ringkasan AI --}}
+    @php
+        $ringkasanAi = session('ringkasan_ai');
+        $ringkasanAiAktif = is_array($ringkasanAi) && ($ringkasanAi['bulan'] ?? null) === $bulan;
+    @endphp
+
+    <section class="mb-4 rounded-2xl border border-kr-line bg-white p-3 shadow-kr-card lg:max-w-xl">
+        <div class="flex items-start justify-between gap-3">
+            <div>
+                <p class="text-[11px] font-bold uppercase tracking-wide text-kr-muted">Ringkasan AI</p>
+                <p class="mt-0.5 text-[10px] text-kr-faint">Ringkas angka {{ $labelBulan }} jadi beberapa kalimat.</p>
+            </div>
+
+            @if ($ringkasanAiAktif)
+                <span class="shrink-0 rounded-full bg-kr-soft px-2 py-0.5 text-[10px] font-bold text-kr-muted">
+                    Dibuat oleh AI
+                </span>
+            @endif
+        </div>
+
+        @if ($ringkasanAiAktif)
+            <p class="mt-2 whitespace-pre-line text-xs leading-relaxed text-kr-brown">{{ $ringkasanAi['teks'] }}</p>
+            <p class="mt-1.5 text-[10px] text-kr-faint">Dibuat {{ $ringkasanAi['waktu'] }} dari angka laporan.</p>
+        @endif
+
+        @if (session('ringkasan_ai_error'))
+            <p class="mt-2 rounded-xl bg-amber-50 px-3 py-2 text-[11px] text-kr-warning">
+                {{ session('ringkasan_ai_error') }}
+            </p>
+        @endif
+
+        <form method="POST" action="{{ route('laporan.ringkasan-ai') }}" class="mt-2">
+            @csrf
+            <input type="hidden" name="bulan" value="{{ $bulan }}">
+            <button type="submit"
+                    class="inline-flex min-h-10 items-center justify-center rounded-[14px] border border-kr-line-strong bg-white px-3 py-2 text-xs font-bold text-kr-brown transition hover:bg-kr-soft active:scale-[0.99]">
+                {{ $ringkasanAiAktif ? 'Buat ulang ringkasan' : 'Buat ringkasan' }}
+            </button>
+        </form>
+    </section>
+
     {{-- Ringkasan keuangan --}}
     <section class="mb-5 rounded-2xl bg-kr-ink px-4 py-4 text-white shadow-kr-card lg:px-6 lg:py-5">
         <p class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Pemasukan &middot; {{ $labelBulan }}</p>
