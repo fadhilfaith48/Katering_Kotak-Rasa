@@ -90,5 +90,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/laporan/export/pdf', [LaporanExportController::class, 'pdf'])
             ->name('laporan.export.pdf');
+
+        // Ringkasan AI: hanya angka agregat yang dikirim ke penyedia AI.
+        Route::post('/laporan/ringkasan-ai', [LaporanController::class, 'ringkasanAi'])
+            ->middleware('throttle:6,1')
+            ->name('laporan.ringkasan-ai');
     });
 });
