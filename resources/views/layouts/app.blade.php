@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#f97316">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+    <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon-180.png') }}">
 
     <title>@yield('title', 'Beranda') &middot; KotakRasa</title>
 
@@ -66,6 +68,8 @@
             <p class="mt-1 truncate text-sm font-semibold text-kr-ink">{{ $pengguna?->name }}</p>
             <p class="text-[11px] text-kr-faint">{{ $pengguna?->isPemilik() ? 'Pemilik' : 'Pencatat' }}</p>
         </div>
+
+        <x-install-app kelas="mt-3" />
     </aside>
 
     <div class="min-h-screen lg:pl-64">

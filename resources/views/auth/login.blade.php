@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f97316">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+    <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon-180.png') }}">
 
     <title>Masuk &middot; KotakRasa</title>
 
@@ -114,6 +116,8 @@
                     <p class="mt-2 text-[10px] text-kr-faint">Password semua akun demo: <span class="font-semibold text-kr-muted">password123</span></p>
                 </div>
             </div>
+
+            <x-install-app kelas="mt-4" />
 
             <p class="mt-5 text-center text-[11px] text-kr-faint">KotakRasa MVP &middot; Data tersimpan di server</p>
         </div>
