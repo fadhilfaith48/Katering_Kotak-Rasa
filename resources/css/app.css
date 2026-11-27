@@ -1,3 +1,4 @@
+@import '@fontsource-variable/plus-jakarta-sans';
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -6,10 +7,10 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+    --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* Token visual KotakRasa — diambil dari prototipe Figma */
+    /* Token visual KotakRasa — hangat, bersih, lega */
     --color-kr-cream: #fbf7f2;
     --color-kr-tint: #fff8f3;
     --color-kr-soft: #fcf2eb;
@@ -23,8 +24,213 @@
     --color-kr-accent: #9d4300;
     --color-kr-success: #059669;
     --color-kr-success-deep: #047857;
+    --color-kr-success-soft: #d1fae5;
+    --color-kr-info: #0369a1;
+    --color-kr-info-soft: #e0f2fe;
     --color-kr-danger: #be123c;
+    --color-kr-danger-soft: #ffe4e6;
     --color-kr-warning: #b45309;
+    --color-kr-warning-soft: #fef3c7;
 
-    --shadow-kr-card: 0 1px 3px rgb(31 27 23 / 0.06);
+    /* Tiga level radius saja: input/tombol, kartu, panel besar. */
+    --radius-kr-sm: 0.75rem;
+    --radius-kr-md: 1rem;
+    --radius-kr-lg: 1.25rem;
+
+    /* Satu keluarga bayangan: kartu biasa dan kartu utama. */
+    --shadow-kr-card: 0 1px 2px rgb(31 27 23 / 0.05), 0 8px 24px rgb(31 27 23 / 0.04);
+    --shadow-kr-raised: 0 12px 32px rgb(31 27 23 / 0.10);
+}
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        text-rendering: optimizeLegibility;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-kr-primary);
+        outline-offset: 2px;
+    }
+}
+
+@layer components {
+    /* Tabel data KotakRasa — desktop sejajar, HP menjadi kartu bertumpuk. */
+    .kr-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .kr-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .kr-table thead th {
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--color-kr-line);
+        background: var(--color-kr-tint);
+        color: var(--color-kr-faint);
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-align: left;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .kr-table tbody td {
+        padding: 0.875rem 1rem;
+        border-bottom: 1px solid color-mix(in srgb, var(--color-kr-line) 72%, white);
+        color: var(--color-kr-brown);
+        font-size: 0.875rem;
+        line-height: 1.45;
+        vertical-align: middle;
+    }
+
+    .kr-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .kr-table tbody tr {
+        transition: background-color 0.15s ease;
+    }
+
+    .kr-table tbody tr:hover {
+        background: var(--color-kr-tint);
+    }
+
+    .kr-table tbody tr.is-cancelled {
+        background: var(--color-kr-soft);
+    }
+
+    .kr-table tbody tr.is-cancelled td {
+        color: var(--color-kr-faint);
+    }
+
+    .kr-table .num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+
+    .kr-table .strong {
+        color: var(--color-kr-ink);
+        font-weight: 700;
+    }
+
+    .kr-table .muted {
+        color: var(--color-kr-faint);
+        font-size: 0.75rem;
+    }
+
+    .kr-table .cell-actions {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .kr-table tr.kr-table-detail > td {
+        padding: 0 1rem 1rem;
+        border-bottom: 1px solid var(--color-kr-line);
+        background: var(--color-kr-tint);
+    }
+
+    @media (max-width: 63.9375rem) {
+        .kr-table-wrap {
+            overflow: visible;
+        }
+
+        .kr-table,
+        .kr-table tbody,
+        .kr-table tr,
+        .kr-table td {
+            display: block;
+            width: 100%;
+        }
+
+        .kr-table thead {
+            display: none;
+        }
+
+        .kr-table tbody {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .kr-table tbody tr {
+            overflow: hidden;
+            border: 1px solid var(--color-kr-line);
+            border-radius: var(--radius-kr-md);
+            background: white;
+            box-shadow: var(--shadow-kr-card);
+            padding: 0.35rem 0.9rem;
+        }
+
+        .kr-table tbody tr:hover {
+            background: white;
+        }
+
+        .kr-table tbody tr.is-cancelled {
+            background: var(--color-kr-soft);
+        }
+
+        .kr-table tbody td {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.45rem 0;
+            border-bottom: 0;
+            text-align: right;
+        }
+
+        .kr-table tbody td::before {
+            content: attr(data-label);
+            flex: 0 0 40%;
+            color: var(--color-kr-muted);
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-align: left;
+            text-transform: uppercase;
+        }
+
+        .kr-table tbody td.cell-title {
+            margin-bottom: 0.3rem;
+            padding: 0.55rem 0 0.6rem;
+            border-bottom: 1px solid var(--color-kr-line);
+            color: var(--color-kr-ink);
+            font-size: 0.9375rem;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .kr-table tbody td.cell-title::before,
+        .kr-table tbody td[data-label=""]::before {
+            content: none;
+        }
+
+        .kr-table tbody td.cell-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 0.6rem;
+        }
+
+        .kr-table tr.kr-table-detail {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .kr-table tr.kr-table-detail > td {
+            padding: 0.75rem 0 0;
+            background: transparent;
+        }
+    }
 }
