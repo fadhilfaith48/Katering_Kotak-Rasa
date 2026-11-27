@@ -3,11 +3,11 @@
     'deskripsi' => null,
 ])
 
-<div class="mb-5 flex items-start justify-between gap-3">
+<div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
     <div class="min-w-0">
-        <h1 class="text-xl font-bold tracking-tight text-kr-ink sm:text-2xl">{{ $judul }}</h1>
+        <h1 class="text-2xl font-bold tracking-tight text-kr-ink sm:text-3xl">{{ $judul }}</h1>
         @if ($deskripsi)
-            <p class="mt-1 text-sm leading-relaxed text-kr-muted">{{ $deskripsi }}</p>
+            <p class="mt-1.5 max-w-2xl text-sm leading-relaxed text-kr-muted">{{ $deskripsi }}</p>
         @endif
     </div>
 

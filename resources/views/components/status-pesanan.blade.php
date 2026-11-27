@@ -2,10 +2,10 @@
 
 @php
     $kelas = match ($status) {
-        'baru' => 'bg-sky-50 text-sky-700 ring-sky-200',
-        'diproses' => 'bg-amber-50 text-kr-warning ring-amber-200',
-        'selesai' => 'bg-emerald-50 text-kr-success-deep ring-emerald-200',
-        'batal' => 'bg-rose-50 text-kr-danger ring-rose-200',
+        'baru' => 'bg-kr-info-soft text-kr-info ring-kr-info/20',
+        'diproses' => 'bg-kr-warning-soft text-kr-warning ring-kr-warning/20',
+        'selesai' => 'bg-kr-success-soft text-kr-success-deep ring-kr-success/20',
+        'batal' => 'bg-kr-danger-soft text-kr-danger ring-kr-danger/20',
         default => 'bg-kr-tint text-kr-muted ring-kr-line',
     };
 
@@ -18,6 +18,6 @@
     };
 @endphp
 
-<span {{ $attributes->merge(['class' => "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 $kelas"]) }}>
+<span {{ $attributes->merge(['class' => "inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold ring-1 $kelas"]) }}>
     {{ $label }}
 </span>
