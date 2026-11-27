@@ -6,7 +6,7 @@
     <x-page-header judul="Pesanan" deskripsi="Daftar pesanan katering beserta status pengerjaannya.">
         <x-slot:aksi>
             <a href="{{ route('pesanan.create') }}"
-               class="inline-flex min-h-12 items-center gap-1.5 rounded-[14px] bg-kr-primary px-4 py-3 text-base font-bold text-white shadow-kr-primary/30 transition hover:bg-kr-accent active:scale-[0.99]">
+               class="inline-flex min-h-12 items-center gap-1.5 rounded-kr-sm bg-kr-primary px-4 py-3 text-base font-bold text-white shadow-kr-raised transition hover:bg-kr-accent active:scale-[0.99]">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -43,11 +43,11 @@
                        name="q"
                        value="{{ $cari }}"
                        placeholder="Cari nama pelanggan atau nomor"
-                       class="w-full rounded-xl border border-kr-line-strong bg-white py-3 pl-9 pr-3 text-base text-kr-ink outline-none transition placeholder:text-kr-faint focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25">
+                       class="w-full rounded-kr-sm border border-kr-line-strong bg-white py-3 pl-9 pr-3 text-base text-kr-ink outline-none transition placeholder:text-kr-faint focus:border-kr-primary focus:ring-2 focus:ring-kr-primary/25">
             </div>
 
             <button type="submit"
-                    class="rounded-xl border border-kr-line-strong bg-white px-3.5 py-2.5 text-sm font-semibold text-kr-muted transition hover:bg-kr-soft">
+                    class="rounded-kr-sm border border-kr-line-strong bg-white px-3.5 py-2.5 text-sm font-semibold text-kr-muted transition hover:bg-kr-soft">
                 Cari
             </button>
         </div>
@@ -73,57 +73,96 @@
     </div>
 
     {{-- Daftar --}}
-    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-4">
-    @forelse ($pesanan as $item)
-        <a href="{{ route('pesanan.show', $item) }}"
-           class="mb-3 block rounded-2xl border border-kr-line bg-white p-4 shadow-kr-card transition hover:border-kr-line-strong hover:shadow-md active:scale-[0.995] lg:mb-0">
-            <div class="flex items-start justify-between gap-2">
-                <div class="min-w-0">
-                    <p class="text-[10px] font-bold uppercase tracking-wide text-kr-faint">{{ $item->nomor }}</p>
-                    <p class="mt-0.5 truncate text-sm font-bold text-kr-ink">
-                        {{ $item->pelanggan?->nama ?? 'Pelanggan' }}
-                    </p>
-                </div>
-
-                <x-status-pesanan :status="$item->status" class="shrink-0" />
+    <section class="overflow-hidden rounded-kr-md border border-kr-line bg-white shadow-kr-card">
+        <div class="flex items-start justify-between gap-3 border-b border-kr-line/70 px-4 py-4">
+            <div>
+                <p class="text-[11px] font-bold uppercase tracking-wide text-kr-faint">Daftar pesanan</p>
+                <h2 class="mt-0.5 text-base font-bold text-kr-ink">
+                    {{ $pesanan->total() }} pesanan
+                    @if ($status !== '')
+                        &middot; {{ $daftarStatus[$status] ?? $status }}
+                    @endif
+                </h2>
             </div>
 
-            <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] text-kr-muted">
-                <span class="inline-flex items-center gap-1">
-                    <svg class="h-3.5 w-3.5 text-kr-faint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                    </svg>
-                    {{ $item->tanggal_acara?->locale('id')->isoFormat('ddd, D MMM YYYY') }}
-                </span>
-
-                <span>{{ $item->jumlah_box }} box</span>
-                @if ($item->jumlah_snack > 0)
-                    <span>{{ $item->jumlah_snack }} snack</span>
-                @endif
-
-                <span class="inline-flex items-center gap-1">
-                    <span class="h-1 w-1 rounded-full bg-kr-line-strong"></span>
-                    {{ $item->jalur_pesanan === 'whatsapp' ? 'WhatsApp' : 'Langsung' }}
-                </span>
-            </div>
-
-            <div class="mt-3 flex items-center justify-between border-t border-kr-line/70 pt-2.5">
-                <x-status-bayar :status="$item->status_bayar" />
-
-                <span class="text-sm font-bold text-kr-ink">{{ $rupiah($item->total) }}</span>
-            </div>
-        </a>
-    @empty
-        <div class="lg:col-span-2">
-            <x-empty-state judul="Belum ada pesanan" deskripsi="Pesanan yang kamu catat akan muncul di sini.">
-                <a href="{{ route('pesanan.create') }}"
-                   class="inline-flex min-h-12 items-center gap-1.5 rounded-[14px] bg-kr-primary px-4 py-3 text-base font-bold text-white shadow-kr-primary/25 transition hover:bg-kr-accent">
-                    Buat Pesanan Pertama
-                </a>
-            </x-empty-state>
+            <a href="{{ route('pesanan.index') }}"
+               class="shrink-0 pt-0.5 text-xs font-semibold text-kr-muted transition hover:text-kr-primary">
+                Atur ulang
+            </a>
         </div>
-    @endforelse
-    </div>
+
+        @if ($pesanan->isEmpty())
+            <div class="p-4">
+                <x-empty-state judul="Belum ada pesanan" deskripsi="Pesanan yang kamu catat akan muncul di sini.">
+                    <a href="{{ route('pesanan.create') }}"
+                       class="inline-flex min-h-12 items-center gap-1.5 rounded-kr-sm bg-kr-primary px-4 py-3 text-base font-bold text-white shadow-kr-raised transition hover:bg-kr-accent">
+                        Buat Pesanan Pertama
+                    </a>
+                </x-empty-state>
+            </div>
+        @else
+            <div class="kr-table-wrap">
+                <table class="kr-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Pelanggan &amp; nomor</th>
+                            <th scope="col">Tanggal acara</th>
+                            <th scope="col">Porsi</th>
+                            <th scope="col">Status pesanan</th>
+                            <th scope="col">Pembayaran</th>
+                            <th scope="col" class="num">Total</th>
+                            <th scope="col"><span class="sr-only">Aksi</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pesanan as $item)
+                            <tr class="{{ $item->status === 'batal' ? 'is-cancelled' : '' }}">
+                                <td data-label="Pelanggan" class="cell-title">
+                                    <a href="{{ route('pesanan.show', $item) }}" class="block">
+                                        <span class="block truncate text-sm font-bold text-kr-ink">
+                                            {{ $item->pelanggan?->nama ?? 'Pelanggan' }}
+                                        </span>
+                                        <span class="mt-0.5 block text-[11px] font-semibold uppercase tracking-wide text-kr-faint">
+                                            {{ $item->nomor }} &middot; {{ $item->jalur_pesanan === 'whatsapp' ? 'WhatsApp' : 'Langsung' }}
+                                        </span>
+                                    </a>
+                                </td>
+
+                                <td data-label="Tanggal acara" class="whitespace-nowrap">
+                                    {{ $item->tanggal_acara?->locale('id')->isoFormat('ddd, D MMM YYYY') }}
+                                </td>
+
+                                <td data-label="Porsi" class="whitespace-nowrap">
+                                    <span class="strong">{{ $item->jumlah_box }} box</span>
+                                    @if ($item->jumlah_snack > 0)
+                                        <span class="muted">&middot; {{ $item->jumlah_snack }} snack</span>
+                                    @endif
+                                </td>
+
+                                <td data-label="Status pesanan">
+                                    <x-status-pesanan :status="$item->status" />
+                                </td>
+
+                                <td data-label="Pembayaran">
+                                    <x-status-bayar :status="$item->status_bayar" />
+                                </td>
+
+                                <td data-label="Total" class="num strong">{{ $rupiah($item->total) }}</td>
+
+                                <td class="cell-actions" data-label="">
+                                    <a href="{{ route('pesanan.show', $item) }}"
+                                       class="inline-flex min-h-9 items-center gap-1 rounded-kr-sm border border-kr-line bg-white px-2.5 py-1.5 text-xs font-bold text-kr-muted transition hover:border-kr-line-strong hover:text-kr-primary">
+                                        Detail
+                                        <span aria-hidden="true">&rarr;</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </section>
 
     @if ($pesanan->hasPages())
         <div class="mt-4">
