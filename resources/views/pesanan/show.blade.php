@@ -44,7 +44,6 @@
         </x-slot:aksi>
     </x-page-header>
 
-    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-5">
     {{-- Ringkasan --}}
     <section class="rounded-kr-md border border-kr-line bg-white p-4 shadow-kr-card">
         <div class="flex items-start justify-between gap-2">
@@ -61,7 +60,7 @@
             </div>
         </div>
 
-        <dl class="mt-4 grid grid-cols-2 gap-3 border-t border-kr-line/70 pt-3 text-xs lg:grid-cols-4">
+        <dl class="mt-4 grid grid-cols-2 gap-3 border-t border-kr-line/70 pt-3 text-xs lg:grid-cols-5">
             <div>
                 <dt class="font-semibold uppercase tracking-wide text-kr-faint">Tanggal pesan</dt>
                 <dd class="mt-0.5 font-semibold text-kr-brown">
@@ -72,7 +71,7 @@
             <div>
                 <dt class="font-semibold uppercase tracking-wide text-kr-faint">Tanggal acara</dt>
                 <dd class="mt-0.5 font-semibold text-kr-brown">
-                    {{ $pesanan->tanggal_acara?->locale('id')->isoFormat('dddd, D MMM YYYY') }}
+                    {{ $pesanan->tanggal_acara?->locale('id')->isoFormat('ddd, D MMM YYYY') }}
                 </dd>
             </div>
 
@@ -103,7 +102,7 @@
     </section>
 
     {{-- Item --}}
-    <section class="mt-4 overflow-hidden rounded-kr-md border border-kr-line bg-white shadow-kr-card lg:mt-0">
+    <section class="mt-4 overflow-hidden rounded-kr-md border border-kr-line bg-white shadow-kr-card">
         <div class="border-b border-kr-line/70 px-4 py-3">
             <p class="text-[11px] font-bold uppercase tracking-wide text-kr-faint">Komponen paket</p>
             <h2 class="mt-0.5 text-sm font-bold text-kr-ink">Rincian Item</h2>
@@ -113,7 +112,13 @@
             <p class="px-4 py-6 text-center text-sm text-kr-faint">Belum ada item pada pesanan ini.</p>
         @else
             <div class="kr-table-wrap">
-                <table class="kr-table">
+                <table class="kr-table kr-table--fixed">
+                    <colgroup>
+                        <col>
+                        <col class="w-28">
+                        <col class="w-32">
+                        <col class="w-32">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th scope="col">Nama menu</th>
@@ -140,10 +145,9 @@
 
         <div class="flex items-center justify-between border-t border-kr-line bg-kr-tint px-4 py-3">
             <span class="text-xs font-bold uppercase tracking-wide text-kr-muted">Total pesanan</span>
-            <span class="text-lg font-bold text-kr-ink">{{ $rupiah($pesanan->total) }}</span>
+            <span class="text-lg font-bold text-kr-ink tabular-nums">{{ $rupiah($pesanan->total) }}</span>
         </div>
     </section>
-    </div>
 
     {{-- Pembayaran --}}
     <section class="mt-4 rounded-kr-md border border-kr-line bg-white p-4 shadow-kr-card">
@@ -170,19 +174,19 @@
         <dl class="mt-3 space-y-2 border-y border-kr-line/70 py-3 text-sm">
             <div class="flex items-center justify-between">
                 <dt class="text-kr-muted">Sudah dibayar</dt>
-                <dd class="font-semibold text-kr-ink">{{ $rupiah($pesanan->total_dibayar) }}</dd>
+                <dd class="font-semibold text-kr-ink tabular-nums">{{ $rupiah($pesanan->total_dibayar) }}</dd>
             </div>
 
             @if ((float) $pesanan->dp_hangus > 0)
                 <div class="flex items-center justify-between">
                     <dt class="text-kr-danger">DP hangus</dt>
-                    <dd class="font-semibold text-kr-danger">{{ $rupiah($pesanan->dp_hangus) }}</dd>
+                    <dd class="font-semibold text-kr-danger tabular-nums">{{ $rupiah($pesanan->dp_hangus) }}</dd>
                 </div>
             @endif
 
             <div class="flex items-center justify-between">
                 <dt class="font-semibold text-kr-muted">Sisa tagihan</dt>
-                <dd class="text-base font-bold {{ $pesanan->sisa_tagihan > 0 ? 'text-kr-primary' : 'text-kr-success' }}">
+                <dd class="text-base font-bold tabular-nums {{ $pesanan->sisa_tagihan > 0 ? 'text-kr-primary' : 'text-kr-success' }}">
                     {{ $rupiah($pesanan->sisa_tagihan) }}
                 </dd>
             </div>
@@ -206,7 +210,14 @@
                 </div>
 
                 <div class="kr-table-wrap mt-2">
-                    <table class="kr-table">
+                    <table class="kr-table kr-table--fixed">
+                        <colgroup>
+                            <col class="w-28">
+                            <col class="w-32">
+                            <col>
+                            <col class="w-32">
+                            <col class="w-24">
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th scope="col">Tanggal</th>

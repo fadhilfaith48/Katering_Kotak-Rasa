@@ -26,13 +26,14 @@
         $rupiah = fn ($angka) => 'Rp '.number_format((float) $angka, 0, ',', '.');
     @endphp
 
-    {{-- Pencarian --}}
-    <form method="GET" action="{{ route('pesanan.index') }}" class="mb-3 lg:max-w-xl">
+    {{-- Pencarian & filter --}}
+    <form method="GET" action="{{ route('pesanan.index') }}"
+          class="mb-4 rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card lg:flex lg:items-center lg:gap-4">
         @if ($status !== '')
             <input type="hidden" name="status" value="{{ $status }}">
         @endif
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 lg:min-w-0 lg:flex-1">
             <div class="relative flex-1">
                 <span class="pointer-events-none absolute inset-y-0 left-0 grid w-9 place-items-center text-kr-faint">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -47,14 +48,12 @@
             </div>
 
             <button type="submit"
-                    class="rounded-kr-sm border border-kr-line-strong bg-white px-3.5 py-2.5 text-sm font-semibold text-kr-muted transition hover:bg-kr-soft">
+                    class="inline-flex min-h-12 items-center justify-center rounded-kr-sm border border-kr-line-strong bg-white px-3.5 py-2.5 text-sm font-semibold text-kr-muted transition hover:bg-kr-soft">
                 Cari
             </button>
         </div>
-    </form>
 
-    {{-- Filter status --}}
-    <div class="mb-4 flex gap-2 overflow-x-auto pb-1">
+        <div class="mt-3 flex gap-2 overflow-x-auto pb-1 lg:mt-0 lg:shrink-0 lg:overflow-visible lg:pb-0">
         @foreach ($daftarStatus as $nilai => $label)
             @php
                 $aktif = $status === $nilai;
@@ -70,7 +69,8 @@
                 {{ $label }}
             </a>
         @endforeach
-    </div>
+        </div>
+    </form>
 
     {{-- Daftar --}}
     <section class="overflow-hidden rounded-kr-md border border-kr-line bg-white shadow-kr-card">
@@ -102,14 +102,21 @@
             </div>
         @else
             <div class="kr-table-wrap">
-                <table class="kr-table">
+                <table class="kr-table kr-table--fixed">
+                    <colgroup>
+                        <col>
+                        <col class="w-28">
+                        <col class="w-24">
+                        <col class="w-32">
+                        <col class="w-32">
+                        <col class="w-24">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th scope="col">Pelanggan &amp; nomor</th>
                             <th scope="col">Tanggal acara</th>
                             <th scope="col">Porsi</th>
-                            <th scope="col">Status pesanan</th>
-                            <th scope="col">Pembayaran</th>
+                            <th scope="col">Status &amp; bayar</th>
                             <th scope="col" class="num">Total</th>
                             <th scope="col"><span class="sr-only">Aksi</span></th>
                         </tr>
@@ -129,22 +136,21 @@
                                 </td>
 
                                 <td data-label="Tanggal acara" class="whitespace-nowrap">
-                                    {{ $item->tanggal_acara?->locale('id')->isoFormat('ddd, D MMM YYYY') }}
+                                    {{ $item->tanggal_acara?->locale('id')->isoFormat('D MMM YYYY') }}
                                 </td>
 
-                                <td data-label="Porsi" class="whitespace-nowrap">
-                                    <span class="strong">{{ $item->jumlah_box }} box</span>
+                                <td data-label="Porsi">
+                                    <span class="strong block whitespace-nowrap">{{ $item->jumlah_box }} box</span>
                                     @if ($item->jumlah_snack > 0)
-                                        <span class="muted">&middot; {{ $item->jumlah_snack }} snack</span>
+                                        <span class="muted block whitespace-nowrap">{{ $item->jumlah_snack }} snack</span>
                                     @endif
                                 </td>
 
-                                <td data-label="Status pesanan">
-                                    <x-status-pesanan :status="$item->status" />
-                                </td>
-
-                                <td data-label="Pembayaran">
-                                    <x-status-bayar :status="$item->status_bayar" />
+                                <td data-label="Status &amp; bayar">
+                                    <div class="flex flex-col items-start gap-1">
+                                        <x-status-pesanan :status="$item->status" />
+                                        <x-status-bayar :status="$item->status_bayar" />
+                                    </div>
                                 </td>
 
                                 <td data-label="Total" class="num strong">{{ $rupiah($item->total) }}</td>
