@@ -71,8 +71,19 @@
         border-spacing: 0;
     }
 
+    /* Kolom terkunci agar posisi tidak bergeser saat isi memanjang. */
+    .kr-table--fixed {
+        table-layout: fixed;
+        min-width: 42rem;
+    }
+
+    .kr-table--fixed th,
+    .kr-table--fixed td {
+        overflow-wrap: anywhere;
+    }
+
     .kr-table thead th {
-        padding: 0.7rem 1rem;
+        padding: 0.7rem 0.75rem;
         border-bottom: 1px solid var(--color-kr-line);
         background: var(--color-kr-tint);
         color: var(--color-kr-faint);
@@ -85,7 +96,7 @@
     }
 
     .kr-table tbody td {
-        padding: 0.875rem 1rem;
+        padding: 0.875rem 0.75rem;
         border-bottom: 1px solid color-mix(in srgb, var(--color-kr-line) 72%, white);
         color: var(--color-kr-brown);
         font-size: 0.875rem;
@@ -130,6 +141,7 @@
     }
 
     .kr-table .cell-actions {
+        padding-inline: 0.5rem;
         text-align: right;
         white-space: nowrap;
     }
@@ -151,6 +163,7 @@
         .kr-table td {
             display: block;
             width: 100%;
+            min-width: 0;
         }
 
         .kr-table thead {
