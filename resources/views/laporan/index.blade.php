@@ -10,9 +10,11 @@
     <x-page-header judul="Laporan"
                    deskripsi="Pemasukan, pengeluaran, laba bersih, dan tagihan yang belum lunas." />
 
+    <div class="mb-4 grid gap-4 lg:grid-cols-2 lg:items-stretch">
+    <div class="space-y-4">
     {{-- Filter bulan --}}
     <form method="GET" action="{{ route('laporan.index') }}"
-          class="mb-4 rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card lg:max-w-xl">
+          class="rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card">
         <label for="bulan" class="mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-kr-muted">
             Bulan laporan
         </label>
@@ -32,13 +34,13 @@
     </form>
 
     {{-- Ekspor laporan --}}
-    <div class="mb-4 flex flex-col gap-2 rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card sm:flex-row sm:items-center sm:justify-between lg:max-w-xl">
+    <div class="flex flex-col gap-3 rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card">
         <div>
             <p class="text-[11px] font-bold uppercase tracking-wide text-kr-muted">Unduh laporan</p>
             <p class="mt-0.5 text-[11px] text-kr-faint">{{ $labelBulan }} &middot; siap dibuka di Excel atau dicetak</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-2 sm:flex">
+        <div class="grid grid-cols-2 gap-2">
             <a href="{{ route('laporan.export.excel', ['bulan' => $bulan]) }}"
                class="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-kr-sm border border-kr-line-strong bg-white px-3 py-2.5 text-sm font-bold text-kr-brown transition hover:bg-kr-soft active:scale-[0.99]">
                 <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -56,6 +58,7 @@
             </a>
         </div>
     </div>
+    </div>
 
     {{-- Ringkasan AI --}}
     @php
@@ -63,7 +66,7 @@
         $ringkasanAiAktif = is_array($ringkasanAi) && ($ringkasanAi['bulan'] ?? null) === $bulan;
     @endphp
 
-    <section class="mb-4 rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card lg:max-w-xl">
+    <section class="flex flex-col rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card">
         <div class="flex items-start justify-between gap-3">
             <div>
                 <p class="text-[11px] font-bold uppercase tracking-wide text-kr-muted">Ringkasan AI</p>
@@ -88,7 +91,7 @@
             </p>
         @endif
 
-        <form method="POST" action="{{ route('laporan.ringkasan-ai') }}" class="mt-2">
+        <form method="POST" action="{{ route('laporan.ringkasan-ai') }}" class="mt-auto pt-2">
             @csrf
             <input type="hidden" name="bulan" value="{{ $bulan }}">
             <button type="submit"
@@ -97,22 +100,23 @@
             </button>
         </form>
     </section>
+    </div>
 
     {{-- Ringkasan keuangan --}}
-    <section class="mb-5 rounded-kr-md bg-kr-ink px-4 py-4 text-white shadow-kr-card lg:px-6 lg:py-5">
+    <section class="mb-4 rounded-kr-md bg-kr-ink px-4 py-4 text-white shadow-kr-card lg:px-6 lg:py-5">
         <p class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Pemasukan &middot; {{ $labelBulan }}</p>
-        <p class="mt-1 text-2xl font-bold tracking-tight">{{ $rupiah($pemasukan) }}</p>
+        <p class="mt-1 text-2xl font-bold tracking-tight tabular-nums">{{ $rupiah($pemasukan) }}</p>
 
         <div class="mt-3 grid grid-cols-2 gap-3 border-t border-white/10 pt-3">
             <div>
                 <p class="text-[11px] font-semibold uppercase tracking-wide text-white/60">Total pengeluaran</p>
-                <p class="mt-0.5 text-sm font-bold text-kr-danger-soft">{{ $rupiah($totalPengeluaran) }}</p>
+                <p class="mt-0.5 text-sm font-bold text-kr-danger-soft tabular-nums">{{ $rupiah($totalPengeluaran) }}</p>
             </div>
             <div>
                 <p class="text-[11px] font-semibold uppercase tracking-wide text-white/60">
                     {{ $laba >= 0 ? 'Laba bersih' : 'Rugi' }}
                 </p>
-                <p class="mt-0.5 text-sm font-bold {{ $laba >= 0 ? 'text-kr-success-soft' : 'text-kr-danger-soft' }}">
+                <p class="mt-0.5 text-sm font-bold tabular-nums {{ $laba >= 0 ? 'text-kr-success-soft' : 'text-kr-danger-soft' }}">
                     {{ $rupiah(abs($laba)) }}
                 </p>
             </div>
@@ -126,7 +130,7 @@
     </section>
 
     {{-- Rincian pengeluaran per kategori --}}
-    <section class="mb-5 rounded-kr-md border border-kr-line bg-white p-4 shadow-kr-card">
+    <section class="mb-4 rounded-kr-md border border-kr-line bg-white p-4 shadow-kr-card">
         <div class="flex items-start justify-between gap-3">
             <div>
                 <h2 class="text-sm font-bold text-kr-ink">Pengeluaran per kategori</h2>
@@ -149,7 +153,7 @@
                     <p class="truncate text-sm font-semibold text-kr-brown">
                         {{ $item->kategori?->nama_kategori ?? 'Tanpa kategori' }}
                     </p>
-                    <p class="shrink-0 text-sm font-bold text-kr-ink">{{ $rupiah($item->total) }}</p>
+                    <p class="shrink-0 text-sm font-bold text-kr-ink tabular-nums">{{ $rupiah($item->total) }}</p>
                 </div>
                 <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-kr-soft">
                     <div class="h-full rounded-full bg-kr-primary" style="width: {{ $persen }}%"></div>
@@ -178,7 +182,7 @@
         <div class="flex items-end justify-between gap-3 border-b border-kr-line/70 bg-kr-tint px-4 py-3">
             <div>
                 <p class="text-[11px] font-semibold uppercase tracking-wide text-kr-accent/80">Total tagihan</p>
-                <p class="mt-0.5 text-xl font-bold tracking-tight text-kr-accent">{{ $rupiah($totalTagihan) }}</p>
+                <p class="mt-0.5 text-xl font-bold tracking-tight text-kr-accent tabular-nums">{{ $rupiah($totalTagihan) }}</p>
             </div>
             <p class="text-right text-[11px] text-kr-accent/70">Pesanan batal tidak dihitung.</p>
         </div>
@@ -195,7 +199,14 @@
             </div>
         @else
             <div class="kr-table-wrap">
-                <table class="kr-table">
+                <table class="kr-table kr-table--fixed">
+                    <colgroup>
+                        <col class="w-32">
+                        <col>
+                        <col class="w-32">
+                        <col class="w-32">
+                        <col class="w-32">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th scope="col">No. invoice</th>
@@ -225,7 +236,7 @@
                                 </td>
 
                                 <td data-label="Tanggal acara" class="whitespace-nowrap">
-                                    {{ $item->tanggal_acara?->locale('id')->isoFormat('ddd, D MMM YYYY') }}
+                                    {{ $item->tanggal_acara?->locale('id')->isoFormat('D MMM YYYY') }}
                                 </td>
 
                                 <td data-label="Sisa tagihan" class="num strong text-kr-danger">{{ $rupiah($item->sisa_tagihan) }}</td>

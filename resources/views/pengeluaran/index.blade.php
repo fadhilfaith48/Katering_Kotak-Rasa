@@ -20,9 +20,10 @@
         </x-slot:aksi>
     </x-page-header>
 
-    {{-- Filter bulan --}}
+    {{-- Filter bulan & ringkasan --}}
+    <div class="mb-4 grid gap-4 {{ $pengguna->isPemilik() ? 'lg:grid-cols-2 lg:items-start' : 'lg:max-w-md' }}">
     <form method="GET" action="{{ route('pengeluaran.index') }}"
-          class="mb-4 rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card">
+          class="rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card">
         <label for="bulan" class="mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-kr-muted">
             Filter bulan
         </label>
@@ -48,12 +49,13 @@
 
     {{-- Ringkasan hanya untuk Pemilik --}}
     @if ($pengguna->isPemilik())
-        <div class="mb-4 rounded-kr-md bg-kr-ink px-4 py-4 text-white shadow-kr-card">
+        <div class="rounded-kr-md bg-kr-ink px-4 py-4 text-white shadow-kr-card">
             <p class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Total pengeluaran</p>
-            <p class="mt-1 text-2xl font-bold tracking-tight">{{ $rupiah($totalBulanIni) }}</p>
+            <p class="mt-1 text-2xl font-bold tracking-tight tabular-nums">{{ $rupiah($totalBulanIni) }}</p>
             <p class="mt-1 text-xs text-white/70">{{ $jumlahTransaksi }} transaksi pada periode ini</p>
         </div>
     @endif
+    </div>
 
     {{-- Daftar --}}
     <section class="overflow-hidden rounded-kr-md border border-kr-line bg-white shadow-kr-card">
@@ -83,7 +85,17 @@
             </div>
         @else
             <div class="kr-table-wrap">
-                <table class="kr-table">
+                <table class="kr-table kr-table--fixed">
+                    <colgroup>
+                        <col>
+                        <col class="w-28">
+                        <col class="w-36">
+                        <col class="w-24">
+                        <col class="w-32">
+                        @if ($pengguna->isPemilik())
+                            <col class="w-28">
+                        @endif
+                    </colgroup>
                     <thead>
                         <tr>
                             <th scope="col">Keterangan</th>
@@ -104,7 +116,7 @@
                                 </td>
 
                                 <td data-label="Tanggal" class="whitespace-nowrap">
-                                    {{ $item->tanggal?->locale('id')->isoFormat('ddd, D MMM YYYY') }}
+                                    {{ $item->tanggal?->locale('id')->isoFormat('D MMM YYYY') }}
                                 </td>
 
                                 <td data-label="Kategori">
@@ -123,9 +135,9 @@
 
                                 @if ($pengguna->isPemilik())
                                     <td class="cell-actions" data-label="">
-                                        <div class="flex items-center justify-end gap-2">
+                                        <div class="flex flex-wrap items-center justify-end gap-1.5 lg:flex-col lg:items-end lg:gap-1">
                                             <a href="{{ route('pengeluaran.edit', $item) }}"
-                                               class="rounded-kr-sm border border-kr-line bg-white px-2.5 py-1.5 text-xs font-semibold text-kr-muted transition hover:border-kr-line-strong hover:text-kr-primary">
+                                               class="inline-flex min-h-9 items-center rounded-kr-sm border border-kr-line bg-white px-2.5 py-1.5 text-xs font-semibold text-kr-muted transition hover:border-kr-line-strong hover:text-kr-primary">
                                                 Ubah
                                             </a>
 
@@ -135,7 +147,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                        class="rounded-kr-sm border border-kr-danger/20 bg-white px-2.5 py-1.5 text-xs font-semibold text-kr-danger transition hover:bg-kr-danger-soft">
+                                                        class="inline-flex min-h-9 items-center rounded-kr-sm border border-kr-danger/20 bg-white px-2.5 py-1.5 text-xs font-semibold text-kr-danger transition hover:bg-kr-danger-soft">
                                                     Hapus
                                                 </button>
                                             </form>

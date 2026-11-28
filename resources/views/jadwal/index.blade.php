@@ -16,7 +16,7 @@
                    deskripsi="Pesanan yang akan datang berdasarkan tanggal acara, lengkap dengan jumlah box dan statusnya." />
 
     {{-- Filter rentang --}}
-    <div class="mb-3 flex gap-2 overflow-x-auto pb-1">
+    <div class="mb-4 flex gap-2 overflow-x-auto pb-1">
         @foreach (['hari-ini' => 'Hari ini', 'minggu-ini' => 'Minggu ini', 'semua' => 'Semua'] as $nilai => $label)
             @php $aktif = $rentang === $nilai; @endphp
 
@@ -34,9 +34,10 @@
         @endif
     </div>
 
-    {{-- Filter tanggal tertentu --}}
+    {{-- Filter tanggal & rekap --}}
+    <div class="mb-4 grid gap-4 lg:grid-cols-2 lg:items-start">
     <form method="GET" action="{{ route('jadwal.index') }}"
-          class="mb-4 rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card">
+          class="rounded-kr-md border border-kr-line bg-white p-3 shadow-kr-card">
         <label for="tanggal" class="mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-kr-muted">
             Atau pilih tanggal tertentu
         </label>
@@ -63,14 +64,15 @@
     </form>
 
     {{-- Rekap beban kerja --}}
-    <div class="mb-4 rounded-kr-md bg-kr-ink px-4 py-4 text-white shadow-kr-card">
+    <div class="rounded-kr-md bg-kr-ink px-4 py-4 text-white shadow-kr-card">
         <p class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Beban kerja pada periode ini</p>
-        <p class="mt-1 text-2xl font-bold tracking-tight">{{ $totalBox }} box</p>
-        <p class="mt-1 text-xs text-white/70">{{ $jumlahPesanan }} pesanan aktif &middot; {{ $totalSnack }} snack</p>
+        <p class="mt-1 text-2xl font-bold tracking-tight tabular-nums">{{ $totalBox }} box</p>
+        <p class="mt-1 text-xs text-white/70 tabular-nums">{{ $jumlahPesanan }} pesanan aktif &middot; {{ $totalSnack }} snack</p>
 
         @if ($jumlahBatal > 0)
             <p class="mt-1 text-xs text-white/60">{{ $jumlahBatal }} pesanan batal tidak dihitung.</p>
         @endif
+    </div>
     </div>
 
     {{-- Daftar per tanggal acara --}}
@@ -87,7 +89,14 @@
             </div>
 
             <div class="kr-table-wrap">
-                <table class="kr-table">
+                <table class="kr-table kr-table--fixed">
+                    <colgroup>
+                        <col>
+                        <col class="w-28">
+                        <col class="w-32">
+                        <col class="w-32">
+                        <col class="w-24">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th scope="col">Pelanggan &amp; nomor</th>
