@@ -29,7 +29,7 @@
     @endphp
 
     {{-- Navigasi samping untuk layar besar --}}
-    <aside class="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-kr-line/80 bg-white px-4 py-6 lg:flex"
+    <aside class="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col overflow-y-auto border-r border-kr-line/80 bg-white px-4 py-6 lg:flex"
            aria-label="Navigasi desktop">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 rounded-kr-md px-2 py-1.5">
             <span class="grid h-11 w-11 shrink-0 place-items-center rounded-kr-sm bg-kr-primary text-white shadow-kr-raised">

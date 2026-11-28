@@ -36,7 +36,7 @@
     </section>
 
     {{-- Kartu metrik --}}
-    <section class="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+    <section class="grid grid-cols-2 gap-3 {{ $pengguna->isPemilik() ? 'lg:grid-cols-4' : 'lg:grid-cols-2' }} lg:gap-4">
         @if ($pengguna->isPemilik())
             <div class="col-span-2 rounded-kr-md border border-kr-line border-b-[3px] border-b-kr-primary bg-white p-4 shadow-kr-card">
                 <div class="flex items-center justify-between">
@@ -47,7 +47,7 @@
                         </svg>
                     </span>
                 </div>
-                <p class="mt-2 text-2xl font-bold tracking-tight text-kr-accent">{{ $rupiah($omzetBulanIni) }}</p>
+                <p class="mt-2 text-2xl font-bold tracking-tight text-kr-accent tabular-nums">{{ $rupiah($omzetBulanIni) }}</p>
                 <p class="mt-1 text-xs text-kr-faint">DP &amp; pelunasan yang masuk bulan ini</p>
             </div>
         @endif
@@ -61,7 +61,7 @@
                     </svg>
                 </span>
             </div>
-            <p class="mt-2 text-xl font-bold text-kr-ink">{{ number_format($totalBoxAktif, 0, ',', '.') }} <span class="text-sm font-semibold text-kr-faint">box</span></p>
+            <p class="mt-2 text-xl font-bold text-kr-ink tabular-nums">{{ number_format($totalBoxAktif, 0, ',', '.') }} <span class="text-sm font-semibold text-kr-faint">box</span></p>
             <p class="mt-1 text-xs text-kr-faint">
                 Perlu disiapkan &middot; {{ number_format($totalSnackAktif, 0, ',', '.') }} snack
             </p>
@@ -76,7 +76,7 @@
                     </svg>
                 </span>
             </div>
-            <p class="mt-2 text-xl font-bold text-kr-ink">{{ $totalPesananAktif }} <span class="text-sm font-semibold text-kr-faint">pesanan</span></p>
+            <p class="mt-2 text-xl font-bold text-kr-ink tabular-nums">{{ $totalPesananAktif }} <span class="text-sm font-semibold text-kr-faint">pesanan</span></p>
             <p class="mt-1 text-xs text-kr-faint">Acara bulan ini</p>
         </div>
     </section>
